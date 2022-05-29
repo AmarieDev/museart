@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'sign_up.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -10,30 +11,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          // Define the default brightness and colors.
-          //brightness: Brightness.dark,
-          primaryColor: Colors.lightBlue[800],
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        //brightness: Brightness.dark,
+        primaryColor: Colors.lightBlue[800],
 
-          // Define the default font family.
-          //fontFamily: 'Georgia',
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
 
-          // Define the default `TextTheme`. Use this to specify the default
-          // text styling for headlines, titles, bodies of text, and more.
-          textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        // Define the default font family.
+        //fontFamily: 'Georgia',
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            //primary: Colors.lightBlue[800],
+            primary: const Color(0xff3E99FF),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
           ),
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text(""),
+        textTheme: const TextTheme(
+          headline1: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.w900,
           ),
-          body: const Text("Hello World!"),
-        ));
+          button: TextStyle(fontSize: 15),
+          headline6: TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
+      ),
+      home: const Scaffold(body: SignUp()),
+    );
   }
 }
