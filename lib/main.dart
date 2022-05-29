@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sign_up.dart';
+import 'sign_in.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // Define the default brightness and colors.
         //brightness: Brightness.dark,
-        primaryColor: Colors.lightBlue[800],
+        primaryColor: const Color(0xff3E99FF),
 
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
 
@@ -37,12 +38,11 @@ class MyApp extends StatelessWidget {
             fontSize: 24.0,
             fontWeight: FontWeight.w900,
           ),
-          button: TextStyle(fontSize: 15),
           headline6: TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
-          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          bodyText2: TextStyle(fontSize: 14.0),
         ),
       ),
-      home: const Scaffold(body: SignUp()),
+      home: const Scaffold(body: SignIn()),
     );
   }
 }
