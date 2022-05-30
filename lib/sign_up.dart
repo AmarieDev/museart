@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/sign_in.dart';
 import 'my_text_field.dart';
 
 class SignUp extends StatefulWidget {
@@ -60,10 +61,25 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
+              padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton(
                 onPressed: () {},
                 child: const Text("Sign up"),
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignIn()),
+                  );
+                },
+                child: const Text("  Back "),
               ),
             ),
           ],
