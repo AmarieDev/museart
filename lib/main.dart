@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         //brightness: Brightness.dark,
         primaryColor: const Color(0xff3E99FF),
 
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: const Color(0xffFF8383)),
 
         // Define the default font family.
         //fontFamily: 'Georgia',
