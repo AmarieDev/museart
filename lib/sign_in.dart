@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/create_jam.dart';
 import 'package:flutter_application/sign_up.dart';
 import 'my_text_field.dart';
 
@@ -64,7 +65,13 @@ class _SignInState extends State<SignIn> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CreateJamPage()),
+                );
+              },
               child: const Text("Sign in"),
             ),
           ],
