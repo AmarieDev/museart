@@ -25,8 +25,11 @@ class _CreateJamPageState extends State<CreateJamPage> {
     'Jazz',
     'Rap',
   ];
+  int _buttonState = 0;
+  final int _kInstrumentsState = 1;
+  final int _kGenreState = 2;
 
-  void _showMultiSelect(List<String> items, List<String> selectedItems) async {
+  void _showMultiSelect(List<String> items) async {
     final List<String>? results = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -37,7 +40,11 @@ class _CreateJamPageState extends State<CreateJamPage> {
     // Update UI
     if (results != null) {
       setState(() {
-        selectedItems = results;
+        if (_buttonState == _kInstrumentsState) {
+          _selectedInstruments = results;
+        } else if (_buttonState == _kGenreState) {
+          _selectedGenres = results;
+        }
       });
     }
   }
@@ -117,8 +124,10 @@ class _CreateJamPageState extends State<CreateJamPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
               child: ElevatedButton(
-                onPressed: () =>
-                    _showMultiSelect(_instuments, _selectedInstruments),
+                onPressed: () {
+                  _buttonState = _kInstrumentsState;
+                  _showMultiSelect(_instuments);
+                },
                 child: const Text('Select Instruments'),
               ),
             ),
@@ -136,7 +145,10 @@ class _CreateJamPageState extends State<CreateJamPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
               child: ElevatedButton(
-                onPressed: () => _showMultiSelect(_genres, _selectedGenres),
+                onPressed: () {
+                  _buttonState = _kGenreState;
+                  _showMultiSelect(_genres);
+                },
                 child: const Text('Select Genre'),
               ),
             ),
