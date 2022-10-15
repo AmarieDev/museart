@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'multi_select.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
@@ -8,10 +9,42 @@ class CreateJamPage extends StatefulWidget {
 }
 
 class _CreateJamPageState extends State<CreateJamPage> {
+  List<String> _selectedInstruments = [];
+  List<String> _selectedGenres = [];
+  final List<String> _instuments = [
+    'Guitar',
+    'Drums',
+    'Base',
+    'Piano',
+    'Saxsaphone',
+  ];
+  final List<String> _genres = [
+    'Rock',
+    'Metal',
+    'Funk',
+    'Jazz',
+    'Rap',
+  ];
+
+  void _showMultiSelect(List<String> items, List<String> selectedItems) async {
+    final List<String>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(items: items);
+      },
+    );
+
+    // Update UI
+    if (results != null) {
+      setState(() {
+        selectedItems = results;
+      });
+    }
+  }
+
   bool isSwitched = false;
   bool value = false;
-  bool _secValue = false;
-  bool _firstValue = false;
+
   @override
   Widget build(BuildContext context) {
     String? dropdownValue;
@@ -51,67 +84,6 @@ class _CreateJamPageState extends State<CreateJamPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  //canvasColor: Theme.of(context).colorScheme.secondary,
-                  backgroundColor: Colors.grey,
-                ),
-                child: DropdownButton<String>(
-                  value: dropdownValue,
-                  hint: const Text("Genre"),
-                  dropdownColor: Colors.grey,
-
-                  isExpanded: true,
-                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                  elevation: 16,
-                  // style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue!;
-                    });
-                  },
-                  items: <String>['Rock', 'Metal', 'Pop', 'Rap']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      alignment: AlignmentDirectional.centerStart,
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-            DropdownButton<String>(
-              items: [
-                DropdownMenuItem(
-                  child: Row(
-                    children: <Widget>[
-                      Checkbox(
-                        onChanged: null,
-                        value: _firstValue,
-                      ),
-                      const Text('First'),
-                    ],
-                  ),
-                ),
-                DropdownMenuItem(
-                  child: Row(
-                    children: <Widget>[
-                      Checkbox(
-                        onChanged: null,
-                        value: _secValue,
-                      ),
-                      const Text('Second'),
-                    ],
-                  ),
-                )
-              ],
-              onChanged: null,
-              hint: const Text('Select value'),
-            ),
-            Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
               child: ListTile(
                 leading: const Text("Private"),
@@ -142,43 +114,81 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+              child: ElevatedButton(
+                onPressed: () =>
+                    _showMultiSelect(_instuments, _selectedInstruments),
+                child: const Text('Select Instruments'),
+              ),
+            ),
+            const Divider(
+              height: 30,
+            ),
+            // display selected items
+            Wrap(
+              children: _selectedInstruments
+                  .map((e) => Chip(
+                        label: Text(e),
+                      ))
+                  .toList(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+              child: ElevatedButton(
+                onPressed: () => _showMultiSelect(_genres, _selectedGenres),
+                child: const Text('Select Genre'),
+              ),
+            ),
+            const Divider(
+              height: 30,
+            ),
+            // display selected items
+            Wrap(
+              children: _selectedGenres
+                  .map((e) => Chip(
+                        label: Text(e),
+                      ))
+                  .toList(),
+            ),
             const SizedBox(
               height: 128,
             ),
           ]),
         ),
         bottomSheet: Container(
-            height: 70,
-            color: const Color(0xffC0A0C1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreateJamPage()),
-                    );
-                  },
-                  child: const Text("Cancel"),
+          height: 70,
+          color: const Color(0xffC0A0C1),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).colorScheme.secondary,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreateJamPage(),
-                      ),
-                    );
-                  },
-                  child: const Text("Create"),
-                ),
-              ],
-            )),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreateJamPage()),
+                  );
+                },
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CreateJamPage(),
+                    ),
+                  );
+                },
+                child: const Text("Create"),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
