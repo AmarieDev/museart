@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'multi_select.dart';
-import 'my_icon_text_field.dart';
-import 'my_padding.dart';
+import '../reusable_widgets/multi_select.dart';
+import '../reusable_widgets/my_icon_text_field.dart';
+import '../reusable_widgets/my_padding.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/sign_in.dart';
-import 'my_text_field.dart';
+import 'package:flutter_application/pages/sign_in.dart';
+import '../reusable_widgets/my_text_field.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);

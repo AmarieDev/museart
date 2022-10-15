@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/create_jam.dart';
-import 'package:flutter_application/sign_up.dart';
-import 'my_text_field.dart';
+import 'package:flutter_application/pages/create_jam.dart';
+import 'package:flutter_application/pages/sign_up.dart';
+import '../reusable_widgets/my_text_field.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
