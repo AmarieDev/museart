@@ -25,15 +25,24 @@ class _CreateJamPageState extends State<CreateJamPage> {
     'Jazz',
     'Rap',
   ];
-  int _buttonState = 0;
+  late int _buttonState;
   final int _kInstrumentsState = 1;
   final int _kGenreState = 2;
 
-  void _showMultiSelect(List<String> items) async {
+  void _showMultiSelect() async {
     final List<String>? results = await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return MultiSelect(items: items);
+        if (_buttonState == _kInstrumentsState) {
+          return MultiSelect(items: _instuments);
+        } else if (_buttonState == _kGenreState) {
+          return MultiSelect(items: _genres);
+        } else {
+          return const AlertDialog(
+            title: Text('State Error'),
+            content: Text('Undefined State!'),
+          );
+        }
       },
     );
 
@@ -44,6 +53,8 @@ class _CreateJamPageState extends State<CreateJamPage> {
           _selectedInstruments = results;
         } else if (_buttonState == _kGenreState) {
           _selectedGenres = results;
+        } else {
+          throw Error();
         }
       });
     }
@@ -126,7 +137,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
               child: ElevatedButton(
                 onPressed: () {
                   _buttonState = _kInstrumentsState;
-                  _showMultiSelect(_instuments);
+                  _showMultiSelect();
                 },
                 child: const Text('Select Instruments'),
               ),
@@ -147,7 +158,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
               child: ElevatedButton(
                 onPressed: () {
                   _buttonState = _kGenreState;
-                  _showMultiSelect(_genres);
+                  _showMultiSelect();
                 },
                 child: const Text('Select Genre'),
               ),
