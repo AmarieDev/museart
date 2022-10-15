@@ -68,7 +68,6 @@ class _CreateJamPageState extends State<CreateJamPage> {
 
   @override
   Widget build(BuildContext context) {
-    String? dropdownValue;
     return SafeArea(
       child: Scaffold(
         // backgroundColor: const Color(0xffF5EFF5),
