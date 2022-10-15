@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'multi_select.dart';
+import 'my_icon_text_field.dart';
+import 'my_padding.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
@@ -71,29 +74,25 @@ class _CreateJamPageState extends State<CreateJamPage> {
         // backgroundColor: const Color(0xffF5EFF5),
         body: SingleChildScrollView(
           child: Column(children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            const MyPadding(
               child: CreateJamTextField(
                 hintText: "Title",
                 icon: Icon(Icons.text_fields_rounded),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            const MyPadding(
               child: CreateJamTextField(
                 hintText: "Date",
                 icon: Icon(Icons.date_range),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            const MyPadding(
               child: CreateJamTextField(
                 hintText: "Time",
                 icon: Icon(Icons.timelapse_rounded),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            const MyPadding(
               child: CreateJamTextField(
                 hintText: "Location",
                 icon: Icon(
@@ -101,22 +100,8 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              child: ListTile(
-                leading: const Text("Private"),
-                trailing: Switch(
-                  value: isSwitched,
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitched = value;
-                    });
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+
+            MyPadding(
               child: TextFormField(
                 keyboardType: TextInputType.multiline,
                 maxLines: 4,
@@ -132,8 +117,20 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+            MyPadding(
+              child: ListTile(
+                title: const Text("Private"),
+                leading: Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            MyPadding(
               child: ElevatedButton(
                 onPressed: () {
                   _buttonState = _kInstrumentsState;
@@ -153,8 +150,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                       ))
                   .toList(),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+            MyPadding(
               child: ElevatedButton(
                 onPressed: () {
                   _buttonState = _kGenreState;
@@ -212,26 +208,6 @@ class _CreateJamPageState extends State<CreateJamPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CreateJamTextField extends StatelessWidget {
-  const CreateJamTextField({
-    required this.hintText,
-    required this.icon,
-    Key? key,
-  }) : super(key: key);
-  final String hintText;
-  final Icon icon;
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        icon: icon,
-        border: const UnderlineInputBorder(),
-        labelText: hintText,
       ),
     );
   }
