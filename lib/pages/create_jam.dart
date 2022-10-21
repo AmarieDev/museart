@@ -138,10 +138,6 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 child: const Text('Select Instruments'),
               ),
             ),
-            const Divider(
-              height: 30,
-            ),
-            // display selected items
             Wrap(
               children: _selectedInstruments
                   .map((e) => Chip(
@@ -149,6 +145,10 @@ class _CreateJamPageState extends State<CreateJamPage> {
                       ))
                   .toList(),
             ),
+            const Divider(
+              height: 30,
+            ),
+            // display selected items
             MyPadding(
               child: ElevatedButton(
                 onPressed: () {
@@ -158,10 +158,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 child: const Text('Select Genre'),
               ),
             ),
-            const Divider(
-              height: 30,
-            ),
-            // display selected items
+
             Wrap(
               children: _selectedGenres
                   .map((e) => Chip(
@@ -169,6 +166,10 @@ class _CreateJamPageState extends State<CreateJamPage> {
                       ))
                   .toList(),
             ),
+            const Divider(
+              height: 30,
+            ),
+            // display selected items
             const SizedBox(
               height: 128,
             ),
