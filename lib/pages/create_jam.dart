@@ -17,9 +17,9 @@ class _CreateJamPageState extends State<CreateJamPage> {
   final List<String> _instuments = [
     'Guitar',
     'Drums',
-    'Base',
+    'Bass',
     'Piano',
-    'Saxsaphone',
+    'Saxophone',
   ];
   final List<String> _genres = [
     'Rock',
