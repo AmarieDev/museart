@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/create_jam.dart';
 import 'package:flutter_application/pages/sign_up.dart';
+import 'package:flutter_application/pages/user_profile.dart';
 import '../reusable_widgets/my_text_field.dart';
 
 class SignIn extends StatefulWidget {
@@ -37,14 +38,14 @@ class _SignInState extends State<SignIn> {
               child:
                   Text("Sign in", style: Theme.of(context).textTheme.headline1),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MyTextField(
                 hintText: "Username",
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MyTextField(
                 hintText: "Password",
               ),
@@ -68,8 +69,7 @@ class _SignInState extends State<SignIn> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreateJamPage()),
+                  MaterialPageRoute(builder: (context) => EditProfilePage()),
                 );
               },
               child: const Text("Sign in"),

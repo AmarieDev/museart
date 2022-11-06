@@ -36,26 +36,26 @@ class _SignUpState extends State<SignUp> {
               child:
                   Text("Sign up", style: Theme.of(context).textTheme.headline1),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MyTextField(
                 hintText: "Username",
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MyTextField(
                 hintText: "Email",
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MyTextField(
                 hintText: "Password",
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MyTextField(
                 hintText: "Password",
               ),
