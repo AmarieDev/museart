@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  const MyTextField({
+  MyTextField({
     required this.hintText,
+    this.readOnly = false,
+    this.label,
     Key? key,
   }) : super(key: key);
   final String hintText;
+  String? label;
+  bool readOnly;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 235,
       height: 39,
       child: TextField(
+        readOnly: readOnly,
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
