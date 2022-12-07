@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/pages/jams_page.dart';
 
 import '../reusable_widgets/multi_select.dart';
 import '../reusable_widgets/my_icon_text_field.dart';
@@ -194,8 +195,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const CreateJamPage()),
+                    MaterialPageRoute(builder: (context) => JamsPage()),
                   );
                 },
                 child: const Text("Cancel"),
@@ -205,7 +205,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CreateJamPage(),
+                      builder: (context) => JamsPage(),
                     ),
                   );
                 },

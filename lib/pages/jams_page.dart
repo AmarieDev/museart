@@ -4,6 +4,8 @@ import 'package:flutter_application/providers/jams_provider.dart';
 import '../data_models/jam.dart';
 import "package:provider/provider.dart";
 
+import 'create_jam.dart';
+
 class JamsPage extends StatelessWidget {
   JamsPage({Key? key}) : super(key: key);
 
@@ -34,6 +36,39 @@ class JamsPage extends StatelessWidget {
                   Text("Date: " + jams[i].date + " Time: " + jams[i].time),
             ),
           ),
+        ),
+      ),
+      bottomSheet: Container(
+        height: 70,
+        color: const Color(0xffC0A0C1),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).colorScheme.secondary,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CreateJamPage()),
+                );
+              },
+              child: const Text("Home"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateJamPage(),
+                  ),
+                );
+              },
+              child: const Text("Create Jam"),
+            ),
+          ],
         ),
       ),
     );
