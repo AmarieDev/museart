@@ -37,9 +37,15 @@ class _CreateJamPageState extends State<CreateJamPage> {
       context: context,
       builder: (BuildContext context) {
         if (_buttonState == _kInstrumentsState) {
-          return MultiSelect(items: _instuments);
+          return MultiSelect(
+            items: _instuments,
+            selectedItems: _selectedInstruments,
+          );
         } else if (_buttonState == _kGenreState) {
-          return MultiSelect(items: _genres);
+          return MultiSelect(
+            items: _genres,
+            selectedItems: _selectedGenres,
+          );
         } else {
           return const AlertDialog(
             title: Text('State Error'),
