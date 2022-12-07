@@ -42,6 +42,10 @@ class JamsProvider with ChangeNotifier {
     return [..._jams];
   }
 
+  Jam findById(String id) {
+    return _jams.firstWhere((element) => element.id == id);
+  }
+
   void addProduct(Jam value) {
     _jams.add(value);
     //notify every listener that a change has happen
