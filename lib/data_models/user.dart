@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'data_models/jam.dart';
+import 'jam.dart';
 
 class User {
   final String id;

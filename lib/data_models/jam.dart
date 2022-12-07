@@ -1,4 +1,5 @@
 class Jam {
+  String id;
   String title;
   String date;
   String time;
@@ -8,6 +9,7 @@ class Jam {
   List<String> prefreableGenres;
   List<String> prefreableInstruments;
   Jam({
+    required this.id,
     required this.title,
     required this.date,
     required this.time,
