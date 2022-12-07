@@ -1,19 +1,24 @@
-import 'jam.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'data_models/jam.dart';
 
 class User {
-  String id;
+  final String id;
   String firstName;
   String lastName;
   String birthday;
   final UserCredentials _userCredentials = UserCredentials();
-  List<String>? prefreableGenres;
-  List<String>? instruments;
-  List<Jam>? jams;
+  List<String> prefreableGenres;
+  List<String> instruments;
+  List<Jam> jams;
   User({
     required this.id,
     required this.firstName,
     required this.lastName,
     required this.birthday,
+    this.prefreableGenres = const [],
+    this.instruments = const [],
+    this.jams = const [],
   });
   void setEmail(String newValue) {
     _userCredentials.email = newValue;
