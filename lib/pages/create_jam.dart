@@ -37,12 +37,13 @@ class _CreateJamPageState extends State<CreateJamPage> {
   final int _kGenreState = 2;
   static int generetedId = 4;
   var newJam = Jam(
-      id: generetedId,
-      title: "",
-      date: "",
-      time: "",
-      location: "",
-      description: "");
+    id: generetedId,
+    title: "",
+    date: "",
+    time: "",
+    location: "",
+    description: "",
+  );
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {
     final List<String>? results = await showDialog(
@@ -233,7 +234,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => JamsPage()),
+                    MaterialPageRoute(builder: (context) => const JamsPage()),
                   );
                 },
                 child: const Text("Cancel"),
@@ -248,7 +249,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => JamsPage(),
+                      builder: (context) => const JamsPage(),
                     ),
                   );
                 },

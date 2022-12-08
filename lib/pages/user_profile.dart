@@ -3,6 +3,8 @@ import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import 'package:flutter_application/reusable_widgets/my_text_field.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }

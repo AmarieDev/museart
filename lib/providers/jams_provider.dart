@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data_models/jam.dart';
 
 class JamsProvider with ChangeNotifier {
+  // ignore: prefer_final_fields
   List<Jam> _jams = [
     Jam(
       id: 1,
