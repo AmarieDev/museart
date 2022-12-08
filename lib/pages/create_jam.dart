@@ -7,6 +7,7 @@ import '../reusable_widgets/my_padding.dart';
 import '../data_models/jam.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
 import "package:provider/provider.dart";
+import 'package:intl/intl.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
@@ -35,7 +36,8 @@ class _CreateJamPageState extends State<CreateJamPage> {
   late int _buttonState;
   final int _kInstrumentsState = 1;
   final int _kGenreState = 2;
-  static int generetedId = 4;
+  TextEditingController dateInput = TextEditingController();
+  TextEditingController timeInput = TextEditingController();
   var newJam = Jam(
     id: "",
     title: "",
@@ -90,6 +92,13 @@ class _CreateJamPageState extends State<CreateJamPage> {
   }
 
   @override
+  void initState() {
+    dateInput.text = ""; //set the initial value of text field
+    timeInput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -108,24 +117,75 @@ class _CreateJamPageState extends State<CreateJamPage> {
                     }),
               ),
               MyPadding(
-                child: CreateJamTextField(
-                  hintText: "Date",
-                  icon: const Icon(Icons.date_range),
-                  keybType: TextInputType.datetime,
-                  save: (val) {
-                    newJam.date = val!;
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  controller: dateInput, //editing controller of this TextField
+                  decoration: const InputDecoration(
+                      icon: Icon(Icons.calendar_today), //icon of text field
+                      labelText: "Enter Date" //label text of field
+                      ),
+                  readOnly:
+                      true, //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(
+                            2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101));
+                    if (pickedDate != null) {
+                      print(
+                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(
+                          formattedDate); //formatted date output using intl package =>  2021-03-16
+                      //you can implement different kind of Date Format here according to your requirement
+
+                      setState(() {
+                        dateInput.text =
+                            formattedDate; //set output date to TextField value.
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
                   },
+                  onSaved: (val) => (newJam.date = val!),
                 ),
               ),
-
               MyPadding(
-                child: CreateJamTextField(
-                  hintText: "Time",
-                  icon: const Icon(Icons.timelapse_rounded),
-                  keybType: TextInputType.datetime,
-                  save: (val) {
-                    newJam.time = val!;
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  controller: timeInput, //editing controller of this TextField
+                  decoration: const InputDecoration(
+                      icon: Icon(Icons.timelapse_rounded), //icon of text field
+                      labelText: "Enter Time" //label text of field
+                      ),
+                  readOnly:
+                      true, //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    TimeOfDay? pickedTime = await showTimePicker(
+                      initialTime: TimeOfDay.now(),
+                      context: context,
+                    );
+                    if (pickedTime != null) {
+                      print(
+                          pickedTime); //pickedDate output format => 2021-03-10 00:00:00.000
+
+                      print(
+                          pickedTime); //formatted date output using intl package =>  2021-03-16
+                      //you can implement different kind of Date Format here according to your requirement
+
+                      setState(() {
+                        timeInput.text = pickedTime
+                            .format(context)
+                            .toString(); //set output time to TextField value.
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
                   },
+                  onSaved: (val) => (newJam.time = val!),
                 ),
               ),
 
