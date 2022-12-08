@@ -11,7 +11,7 @@ class JamDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jamId = ModalRoute.of(context)?.settings.arguments as String;
+    final jamId = ModalRoute.of(context)?.settings.arguments as int;
     final loadedJam =
         Provider.of<JamsProvider>(context, listen: false).findById(jamId);
     return Scaffold(

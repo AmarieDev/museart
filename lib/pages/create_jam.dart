@@ -35,8 +35,14 @@ class _CreateJamPageState extends State<CreateJamPage> {
   late int _buttonState;
   final int _kInstrumentsState = 1;
   final int _kGenreState = 2;
-  var newJam =
-      Jam(id: "", title: "", date: "", time: "", location: "", description: "");
+  static int generetedId = 4;
+  var newJam = Jam(
+      id: generetedId,
+      title: "",
+      date: "",
+      time: "",
+      location: "",
+      description: "");
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {
     final List<String>? results = await showDialog(
@@ -80,6 +86,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
 
   void _saveForm() {
     _form.currentState?.save();
+    generetedId++;
   }
 
   @override

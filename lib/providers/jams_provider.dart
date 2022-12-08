@@ -4,7 +4,7 @@ import '../data_models/jam.dart';
 class JamsProvider with ChangeNotifier {
   List<Jam> _jams = [
     Jam(
-      id: "1",
+      id: 1,
       title: "first jam",
       date: "05.06.2023",
       time: "15:30",
@@ -15,7 +15,7 @@ class JamsProvider with ChangeNotifier {
       prefreableInstruments: ["guitar", "drums"],
     ),
     Jam(
-      id: "2",
+      id: 2,
       title: " Rock and Roll",
       date: "01.02.2023",
       time: "15:30",
@@ -26,7 +26,7 @@ class JamsProvider with ChangeNotifier {
       prefreableInstruments: ["guitar", "drums"],
     ),
     Jam(
-      id: "3",
+      id: 3,
       title: "the ulti jam",
       date: "04.05.2023",
       time: "16:30",
@@ -42,7 +42,7 @@ class JamsProvider with ChangeNotifier {
     return [..._jams];
   }
 
-  Jam findById(String id) {
+  Jam findById(int id) {
     return _jams.firstWhere((element) => element.id == id);
   }
 
