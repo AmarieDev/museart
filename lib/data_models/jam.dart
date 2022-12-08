@@ -5,6 +5,7 @@ class Jam {
   String time;
   String location;
   String description;
+  int maxJamers;
   bool isPrivate;
   List<String> prefreableGenres;
   List<String> prefreableInstruments;
@@ -14,6 +15,7 @@ class Jam {
     required this.date,
     required this.time,
     required this.location,
+    required this.maxJamers,
     this.isPrivate = false,
     this.description = "",
     this.prefreableGenres = const [],

@@ -39,13 +39,13 @@ class _CreateJamPageState extends State<CreateJamPage> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController timeInput = TextEditingController();
   var newJam = Jam(
-    id: "",
-    title: "",
-    date: "",
-    time: "",
-    location: "",
-    description: "",
-  );
+      id: "",
+      title: "",
+      date: "",
+      time: "",
+      location: "",
+      description: "",
+      maxJamers: 2);
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {
     final List<String>? results = await showDialog(
@@ -221,9 +221,12 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 ),
               ),
               MyPadding(
-                child: ListTile(
-                  title: const Text("Private"),
-                  leading: Switch(
+                child: Row(children: [
+                  const Text("Private"),
+                  SizedBox(
+                    width: 53,
+                  ),
+                  Switch(
                     value: isSwitched,
                     onChanged: (value) {
                       setState(() {
@@ -231,6 +234,35 @@ class _CreateJamPageState extends State<CreateJamPage> {
                       });
                     },
                   ),
+                ]),
+              ),
+              MyPadding(
+                child: Row(
+                  children: [
+                    const Text("Max. Jamers"),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    SizedBox(
+                      width: 44,
+                      height: 30,
+                      child: TextFormField(
+                        onSaved: (newValue) =>
+                            (newJam.maxJamers = int.parse(newValue!)),
+                        style: const TextStyle(fontSize: 14.0),
+                        keyboardType: TextInputType.number,
+                        maxLength: 2,
+                        decoration: const InputDecoration(
+                          counterText: "",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               MyPadding(
