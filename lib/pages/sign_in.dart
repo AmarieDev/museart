@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/create_jam.dart';
+import 'package:flutter_application/pages/jams_page.dart';
 import 'package:flutter_application/pages/sign_up.dart';
-import 'package:flutter_application/pages/user_profile.dart';
 import '../reusable_widgets/my_text_field.dart';
 
 class SignIn extends StatefulWidget {
@@ -69,7 +68,7 @@ class _SignInState extends State<SignIn> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EditProfilePage()),
+                  MaterialPageRoute(builder: (context) => const JamsPage()),
                 );
               },
               child: const Text("Sign in"),
