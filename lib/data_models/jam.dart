@@ -1,5 +1,5 @@
 class Jam {
-  int id;
+  String id;
   String title;
   String date;
   String time;

@@ -37,7 +37,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
   final int _kGenreState = 2;
   static int generetedId = 4;
   var newJam = Jam(
-    id: generetedId,
+    id: "",
     title: "",
     date: "",
     time: "",
@@ -87,7 +87,6 @@ class _CreateJamPageState extends State<CreateJamPage> {
 
   void _saveForm() {
     _form.currentState?.save();
-    generetedId++;
   }
 
   @override
@@ -244,6 +243,9 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   _saveForm();
                   final jamsData =
                       Provider.of<JamsProvider>(context, listen: false);
+                  newJam.isPrivate = isSwitched;
+                  newJam.prefreableGenres = _selectedGenres;
+                  newJam.prefreableInstruments = _selectedInstruments;
 
                   jamsData.addJam(newJam);
                   Navigator.push(
