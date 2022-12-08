@@ -97,46 +97,30 @@ class _CreateJamPageState extends State<CreateJamPage> {
                     icon: const Icon(Icons.text_fields_rounded),
                     keybType: TextInputType.text,
                     save: (val) {
-                      newJam = Jam(
-                          id: newJam.id,
-                          title: val!,
-                          date: newJam.date,
-                          time: newJam.time,
-                          location: newJam.location,
-                          description: newJam.description);
+                      newJam.title = val!;
                     }),
               ),
               MyPadding(
-                  child: CreateJamTextField(
-                hintText: "Date",
-                icon: const Icon(Icons.date_range),
-                keybType: TextInputType.datetime,
-                save: (val) {
-                  newJam = Jam(
-                      id: newJam.id,
-                      title: newJam.title,
-                      date: val!,
-                      time: newJam.time,
-                      location: newJam.location,
-                      description: newJam.description);
-                },
-              )),
+                child: CreateJamTextField(
+                  hintText: "Date",
+                  icon: const Icon(Icons.date_range),
+                  keybType: TextInputType.datetime,
+                  save: (val) {
+                    newJam.date = val!;
+                  },
+                ),
+              ),
 
               MyPadding(
-                  child: CreateJamTextField(
-                hintText: "Time",
-                icon: const Icon(Icons.timelapse_rounded),
-                keybType: TextInputType.datetime,
-                save: (val) {
-                  newJam = Jam(
-                      id: newJam.id,
-                      title: newJam.title,
-                      date: newJam.date,
-                      time: val!,
-                      location: newJam.location,
-                      description: newJam.description);
-                },
-              )),
+                child: CreateJamTextField(
+                  hintText: "Time",
+                  icon: const Icon(Icons.timelapse_rounded),
+                  keybType: TextInputType.datetime,
+                  save: (val) {
+                    newJam.time = val!;
+                  },
+                ),
+              ),
 
               MyPadding(
                 child: CreateJamTextField(
@@ -146,28 +130,14 @@ class _CreateJamPageState extends State<CreateJamPage> {
                     ),
                     keybType: TextInputType.streetAddress,
                     save: (val) {
-                      newJam = Jam(
-                        id: newJam.id,
-                        title: newJam.title,
-                        date: newJam.date,
-                        time: newJam.time,
-                        location: val!,
-                        description: newJam.description,
-                      );
+                      newJam.location = val!;
                     }),
               ),
 
               MyPadding(
                 child: TextFormField(
                   onSaved: (value) {
-                    newJam = Jam(
-                      id: newJam.id,
-                      title: newJam.title,
-                      date: newJam.date,
-                      time: newJam.time,
-                      location: newJam.location,
-                      description: value!,
-                    );
+                    newJam.description = value!;
                   },
                   keyboardType: TextInputType.multiline,
                   maxLines: 3,
