@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import '../data_models/jam.dart';
+import 'package:http/http.dart' as http;
 
 class JamsProvider with ChangeNotifier {
   // ignore: prefer_final_fields
@@ -48,6 +50,22 @@ class JamsProvider with ChangeNotifier {
   }
 
   void addJam(Jam value) {
+    final url = Uri.parse(
+        "https://museart-351c7-default-rtdb.firebaseio.com/jams.json");
+    http
+        .post(
+          url,
+          body: json.encode({
+            'title': value.title,
+            'date': value.date,
+            'time': value.time,
+            'description': value.description,
+            'private': value.isPrivate,
+            'prefreable genres': value.prefreableGenres,
+            'prefreable insturments': value.prefreableInstruments
+          }),
+        )
+        .then((response) {});
     _jams.add(value);
     //notify every listener that a change has happen
     notifyListeners();
