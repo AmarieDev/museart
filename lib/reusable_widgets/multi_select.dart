@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Multi Select widget
 // This widget is reusable
+// ignore: must_be_immutable
 class MultiSelect extends StatefulWidget {
   final List<String> items;
   List<String> selectedItems;
