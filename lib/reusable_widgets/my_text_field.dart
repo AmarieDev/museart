@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class MyTextField extends StatelessWidget {
   MyTextField({
     required this.hintText,
+    required this.save,
     this.readOnly = false,
     this.label,
     Key? key,
   }) : super(key: key);
   final String hintText;
+  final Function(String? val) save;
   String? label;
   bool readOnly;
   @override
@@ -16,7 +18,8 @@ class MyTextField extends StatelessWidget {
     return SizedBox(
       width: 235,
       height: 39,
-      child: TextField(
+      child: TextFormField(
+        onSaved: save,
         readOnly: readOnly,
         decoration: InputDecoration(
           fillColor: Colors.white,

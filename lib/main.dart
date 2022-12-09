@@ -3,6 +3,7 @@ import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'pages/sign_in.dart';
 import './providers/jams_provider.dart';
 import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -13,8 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => JamsProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: AuthProvider()),
+        ChangeNotifierProvider.value(value: JamsProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

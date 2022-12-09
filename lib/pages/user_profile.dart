@@ -64,22 +64,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: MyTextField(
                 hintText: "Ammar",
                 readOnly: true,
+                save: (val) {},
               )),
               MyPadding(
                   child: MyTextField(
                 hintText: "Mresh",
                 readOnly: true,
+                save: (val) {},
               )),
               MyPadding(
                   child: MyTextField(
-                hintText: "ammar.mresh@gmail.com",
-                readOnly: true,
-              )),
+                      hintText: "ammar.mresh@gmail.com",
+                      readOnly: true,
+                      save: (val) {})),
               MyPadding(
                   child: MyTextField(
-                hintText: "04.05.1998",
-                readOnly: true,
-              )),
+                      hintText: "04.05.1998", readOnly: true, save: (val) {})),
               const SizedBox(
                 height: 35,
               ),
