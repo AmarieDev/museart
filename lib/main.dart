@@ -18,7 +18,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: AuthProvider()),
-          ChangeNotifierProvider.value(value: JamsProvider()),
+          ChangeNotifierProxyProvider<AuthProvider, JamsProvider>(
+            create: (_) => JamsProvider(null, []),
+            update: (context, auth, previousJams) => (JamsProvider(
+              auth.token,
+              previousJams == null ? [] : previousJams.jams,
+            )),
+          ),
         ],
         child: Consumer<AuthProvider>(
           builder: (ctx, auth, _) => MaterialApp(

@@ -11,13 +11,17 @@ class JamsProvider with ChangeNotifier {
     return [..._jams];
   }
 
+  final String? authToken;
+
+  JamsProvider(this.authToken, this._jams);
+
   Jam findById(String id) {
     return _jams.firstWhere((element) => element.id == id);
   }
 
   void addJam(Jam value) {
     final url = Uri.parse(
-        "https://museart-351c7-default-rtdb.firebaseio.com/jams.json");
+        "https://museart-351c7-default-rtdb.firebaseio.com/jams.json?auth=$authToken");
     http
         .post(
       url,
@@ -54,7 +58,7 @@ class JamsProvider with ChangeNotifier {
 
   Future<void> fetchJams() async {
     final url = Uri.parse(
-        "https://museart-351c7-default-rtdb.firebaseio.com/jams.json");
+        "https://museart-351c7-default-rtdb.firebaseio.com/jams.json?auth=$authToken");
     try {
       final response = await http.get(url);
       final fetchedData = json.decode(response.body) as Map<String, dynamic>;
