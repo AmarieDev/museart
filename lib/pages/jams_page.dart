@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
+import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
 import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import "package:provider/provider.dart";
@@ -80,6 +81,11 @@ class _JamsPageState extends State<JamsPage> {
                 );
               },
               child: const Text("Create Jam"),
+            ),
+            ElevatedButton(
+              onPressed: () =>
+                  Provider.of<AuthProvider>(context, listen: false).logout(),
+              child: const Text("logout"),
             ),
           ],
         ),
