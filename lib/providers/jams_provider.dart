@@ -51,4 +51,32 @@ class JamsProvider with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  Future<void> fetchJams() async {
+    final url = Uri.parse(
+        "https://museart-351c7-default-rtdb.firebaseio.com/jams.json");
+    try {
+      final response = await http.get(url);
+      final fetchedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Jam> loadedJams = [];
+      fetchedData.forEach((key, value) {
+        loadedJams.add(Jam(
+          id: key,
+          title: value['title'],
+          date: value['date'],
+          time: value['time'],
+          location: value['location'],
+          maxJamers: value['max jamers'],
+          description: value['description'],
+          isPrivate: value['private'],
+          prefreableGenres: value['prefreable genres'],
+          prefreableInstruments: value['prefreable instruments'],
+        ));
+      });
+      _jams = loadedJams;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
 }

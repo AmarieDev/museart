@@ -6,8 +6,22 @@ import "package:provider/provider.dart";
 
 import 'create_jam.dart';
 
-class JamsPage extends StatelessWidget {
+class JamsPage extends StatefulWidget {
   const JamsPage({Key? key}) : super(key: key);
+
+  @override
+  State<JamsPage> createState() => _JamsPageState();
+}
+
+class _JamsPageState extends State<JamsPage> {
+  @override
+  void initState() {
+    Provider.of<JamsProvider>(context, listen: false).fetchJams();
+    // work around if listen is set to true
+    //  Future.delayed(Duration.zero).then((value) =>
+    //      Provider.of<JamsProvider>(context, listen: false).fetchJams());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

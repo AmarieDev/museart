@@ -7,8 +7,8 @@ class Jam {
   String description;
   int maxJamers;
   bool isPrivate;
-  List<String> prefreableGenres;
-  List<String> prefreableInstruments;
+  List<dynamic> prefreableGenres;
+  List<dynamic> prefreableInstruments;
   Jam({
     required this.id,
     required this.title,
