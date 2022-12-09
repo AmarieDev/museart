@@ -4,6 +4,7 @@ import 'package:flutter_application/pages/sign_up.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../http_exception.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -18,6 +19,24 @@ class _SignInState extends State<SignIn> {
   late String password;
   void _saveForm() {
     _form.currentState?.save();
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: const Text('An Error Occurred!'),
+              content: Text(message),
+              actions: [
+                ElevatedButton(
+                  onPressed: (() => Navigator.of(ctx).pop()),
+                  child: const Text('Okay'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.secondary,
+                  ),
+                )
+              ],
+            ));
   }
 
   @override
@@ -82,14 +101,26 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   _saveForm();
-                  Provider.of<AuthProvider>(context, listen: false)
-                      .signin(email, password);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const JamsPage()),
-                  );
+                  try {
+                    await Provider.of<AuthProvider>(context, listen: false)
+                        .signin(email, password);
+                  } on HttpException catch (error) {
+                    var errorMessage = 'Authentiacation Failed.';
+                    if (error.toString().contains('INVALID_EMAIL')) {
+                      errorMessage = 'This is not a valid email address';
+                    } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+                      errorMessage = 'Could not find a user with that email.';
+                    } else if (error.toString().contains('INVALID_PASSWORD')) {
+                      errorMessage = 'Invalid password.';
+                    }
+                    _showErrorDialog(errorMessage);
+                  } catch (error) {
+                    var errorMessage =
+                        'Authentiacation Failed. Please check your internet conection and try again later!';
+                    _showErrorDialog(errorMessage);
+                  }
                 },
                 child: const Text("Sign in"),
               ),

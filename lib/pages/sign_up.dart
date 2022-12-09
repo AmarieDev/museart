@@ -3,6 +3,7 @@ import 'package:flutter_application/pages/sign_in.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../http_exception.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -15,6 +16,24 @@ class _SignUpState extends State<SignUp> {
   final _form = GlobalKey<FormState>();
   void _saveForm() {
     _form.currentState?.save();
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: const Text('An Error Occurred!'),
+              content: Text(message),
+              actions: [
+                ElevatedButton(
+                  onPressed: (() => Navigator.of(ctx).pop()),
+                  child: const Text('Okay'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.secondary,
+                  ),
+                )
+              ],
+            ));
   }
 
   late String email;
@@ -81,10 +100,26 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     _saveForm();
-                    Provider.of<AuthProvider>(context, listen: false)
-                        .signup(email, password);
+                    try {
+                      await Provider.of<AuthProvider>(context, listen: false)
+                          .signup(email, password);
+                    } on HttpException catch (error) {
+                      var errorMessage = 'Authentiacation Failed.';
+                      if (error.toString().contains('EMAIL_EXISTS')) {
+                        errorMessage = 'This emaill address is already in use';
+                      } else if (error.toString().contains('INVALID_EMAIL')) {
+                        errorMessage = 'This is not a valid email address';
+                      } else if (error.toString().contains('WEAK_PASSWORD')) {
+                        errorMessage = 'This password is too weak.';
+                      }
+                      _showErrorDialog(errorMessage);
+                    } catch (error) {
+                      var errorMessage =
+                          'Authentiacation Failed. Please check your internet conection and try again later!';
+                      _showErrorDialog(errorMessage);
+                    }
                   },
                   child: const Text("Sign up"),
                   style: ElevatedButton.styleFrom(
