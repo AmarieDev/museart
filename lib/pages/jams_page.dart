@@ -29,26 +29,20 @@ class _JamsPageState extends State<JamsPage> {
     final jamsData = Provider.of<JamsProvider>(context);
     final jams = jamsData.jams;
     return Scaffold(
-      body: MyPadding(
-        child: ListView.builder(
-          itemCount: jams.length,
-          itemBuilder: (ctx, i) => GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                JamDetailPage.routName,
-                arguments: jams[i].id,
-              );
-            },
-            child: ListTile(
-              leading: IconButton(
-                icon: const Icon(Icons.music_note),
-                onPressed: () {},
-              ),
-              title: Text(jams[i].title),
-              subtitle: Text(jams[i].description),
-              trailing:
-                  Text("Date: " + jams[i].date + " Time: " + jams[i].time),
-            ),
+      body: ListView.builder(
+        itemCount: jams.length,
+        itemBuilder: (ctx, i) => GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              JamDetailPage.routName,
+              arguments: jams[i].id,
+            );
+          },
+          child: ListTile(
+            leading: const Icon(Icons.music_note),
+            title: Text(jams[i].title),
+            subtitle: Text(jams[i].description),
+            trailing: Text("Date: " + jams[i].date + " Time: " + jams[i].time),
           ),
         ),
       ),
