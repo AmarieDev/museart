@@ -7,6 +7,7 @@ import '../http_exception.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
+  static const routName = "/sign-up";
 
   @override
   State<SignUp> createState() => _SignUpState();

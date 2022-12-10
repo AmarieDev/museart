@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
+  static const routName = "/create-jam";
 
   @override
   State<CreateJamPage> createState() => _CreateJamPageState();
@@ -309,9 +310,8 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   primary: Theme.of(context).colorScheme.secondary,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const JamsPage()),
+                  Navigator.of(context).pushNamed(
+                    JamsPage.routName,
                   );
                 },
                 child: const Text("Cancel"),
@@ -326,11 +326,8 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   newJam.prefreableInstruments = _selectedInstruments;
 
                   jamsData.addJam(newJam);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const JamsPage(),
-                    ),
+                  Navigator.of(context).pushNamed(
+                    JamsPage.routName,
                   );
                 },
                 child: const Text("Create"),

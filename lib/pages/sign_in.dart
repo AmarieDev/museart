@@ -8,6 +8,7 @@ import '../http_exception.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
+  static const routName = "/sign-in";
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -89,9 +90,8 @@ class _SignInState extends State<SignIn> {
                 height: 30,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SignUp()),
+                    Navigator.of(context).pushNamed(
+                      SignUp.routName,
                     );
                   },
                   child: const Text(

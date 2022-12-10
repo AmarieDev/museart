@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
+import 'package:flutter_application/pages/sign_in.dart';
 import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
 import 'package:flutter_application/reusable_widgets/my_padding.dart';
@@ -9,6 +10,7 @@ import 'create_jam.dart';
 
 class JamsPage extends StatefulWidget {
   const JamsPage({Key? key}) : super(key: key);
+  static const routName = "/jams-page";
 
   @override
   State<JamsPage> createState() => _JamsPageState();
@@ -57,28 +59,24 @@ class _JamsPageState extends State<JamsPage> {
                 primary: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreateJamPage()),
-                );
+                Navigator.of(context).pushNamed(SignIn.routName);
               },
               child: const Text("Home"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreateJamPage(),
-                  ),
+                Navigator.of(context).pushNamed(
+                  CreateJamPage.routName,
                 );
               },
               child: const Text("Create Jam"),
             ),
             ElevatedButton(
-              onPressed: () =>
-                  Provider.of<AuthProvider>(context, listen: false).logout(),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed("/");
+
+                Provider.of<AuthProvider>(context, listen: false).logout();
+              },
               child: const Text("logout"),
             ),
           ],
