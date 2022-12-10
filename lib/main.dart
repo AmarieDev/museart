@@ -60,7 +60,17 @@ class MyApp extends StatelessWidget {
                 bodyText2: TextStyle(fontSize: 14.0),
               ),
             ),
-            home: auth.isAuth ? const JamsPage() : const SignIn(),
+            home: auth.isAuth
+                ? JamsPage()
+                : FutureBuilder(
+                    future: auth.tryAutoLogin(),
+                    builder: (context, authResultSnapshot) =>
+                        (authResultSnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? Container(
+                                color: Colors.red,
+                              )
+                            : const SignIn())),
             routes: {
               JamDetailPage.routName: (context) => JamDetailPage(),
             },
