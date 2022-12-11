@@ -15,6 +15,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  bool _isObscure = true;
   final _form = GlobalKey<FormState>();
   late String email;
   late String password;
@@ -71,7 +72,8 @@ class _SignInState extends State<SignIn> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
-                  hintText: "Username",
+                  inputType: TextInputType.emailAddress,
+                  hintText: "Email",
                   save: (val) {
                     email = val!;
                   },
@@ -80,10 +82,25 @@ class _SignInState extends State<SignIn> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
+                  inputType: TextInputType.text,
                   hintText: "Password",
+                  isObscure: _isObscure,
                   save: (val) {
                     password = val!;
                   },
+                  mySuffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _isObscure ? Icons.visibility_off : Icons.visibility,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  ),
                 ),
               ),
               SizedBox(

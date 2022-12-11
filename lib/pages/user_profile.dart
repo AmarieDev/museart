@@ -62,24 +62,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               MyPadding(
                   child: MyTextField(
+                inputType: TextInputType.none,
                 hintText: "Ammar",
                 readOnly: true,
                 save: (val) {},
               )),
               MyPadding(
                   child: MyTextField(
+                inputType: TextInputType.none,
                 hintText: "Mresh",
                 readOnly: true,
                 save: (val) {},
               )),
               MyPadding(
                   child: MyTextField(
+                      inputType: TextInputType.none,
                       hintText: "ammar.mresh@gmail.com",
                       readOnly: true,
                       save: (val) {})),
               MyPadding(
                   child: MyTextField(
-                      hintText: "04.05.1998", readOnly: true, save: (val) {})),
+                      inputType: TextInputType.none,
+                      hintText: "04.05.1998",
+                      readOnly: true,
+                      save: (val) {})),
               const SizedBox(
                 height: 35,
               ),

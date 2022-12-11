@@ -14,6 +14,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  bool _isObscure = true;
   final _form = GlobalKey<FormState>();
   void _saveForm() {
     _form.currentState?.save();
@@ -71,13 +72,7 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
-                  hintText: "Username",
-                  save: (val) {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: MyTextField(
+                    inputType: TextInputType.emailAddress,
                     hintText: "Email",
                     save: (val) {
                       email = val!;
@@ -86,16 +81,47 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
-                    hintText: "Password",
-                    save: (val) {
-                      password = val!;
-                    }),
+                  inputType: TextInputType.visiblePassword,
+                  hintText: "Password",
+                  isObscure: _isObscure,
+                  save: (val) {
+                    password = val!;
+                  },
+                  mySuffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _isObscure ? Icons.visibility_off : Icons.visibility,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
+                  inputType: TextInputType.visiblePassword,
                   hintText: "Password",
+                  isObscure: _isObscure,
                   save: (val) {},
+                  mySuffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _isObscure ? Icons.visibility_off : Icons.visibility,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  ),
                 ),
               ),
               Padding(
