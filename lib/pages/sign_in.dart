@@ -93,6 +93,7 @@ class _SignInState extends State<SignIn> {
                       // Based on passwordVisible state choose the icon
                       _isObscure ? Icons.visibility_off : Icons.visibility,
                       color: Theme.of(context).primaryColorDark,
+                      size: 20.0,
                     ),
                     onPressed: () {
                       // Update the state i.e. toogle the state of passwordVisible variable
@@ -124,7 +125,7 @@ class _SignInState extends State<SignIn> {
                     await Provider.of<AuthProvider>(context, listen: false)
                         .signin(email, password);
                   } on HttpException catch (error) {
-                    var errorMessage = 'Authentiacation Failed.';
+                    var errorMessage = 'Authentiacation Failed!';
                     if (error.toString().contains('INVALID_EMAIL')) {
                       errorMessage = 'This is not a valid email address';
                     } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
@@ -134,8 +135,7 @@ class _SignInState extends State<SignIn> {
                     }
                     _showErrorDialog(errorMessage);
                   } catch (error) {
-                    var errorMessage =
-                        'Authentiacation Failed. Please check your internet conection and try again later!';
+                    var errorMessage = 'Authentiacation Failed!';
                     _showErrorDialog(errorMessage);
                   }
                 },

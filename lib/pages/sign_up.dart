@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/sign_in.dart';
+import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -15,9 +18,24 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool _isObscure = true;
+  bool _isConfPassObscure = true;
   final _form = GlobalKey<FormState>();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _confPassController = TextEditingController();
   void _saveForm() {
-    _form.currentState?.save();
+    if (isFormValid()) {
+      _form.currentState?.save();
+    }
+  }
+
+  bool isFormValid() {
+    final isValid = _form.currentState?.validate();
+    if (isValid != null && isValid) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void _showErrorDialog(String message) {
@@ -72,6 +90,7 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
+                    myControler: _emailController,
                     inputType: TextInputType.emailAddress,
                     hintText: "Email",
                     save: (val) {
@@ -81,7 +100,7 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: MyTextField(
-                  inputType: TextInputType.visiblePassword,
+                  myControler: _passController,
                   hintText: "Password",
                   isObscure: _isObscure,
                   save: (val) {
@@ -91,6 +110,7 @@ class _SignUpState extends State<SignUp> {
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
                       _isObscure ? Icons.visibility_off : Icons.visibility,
+                      size: 20.0,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -102,25 +122,53 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: MyTextField(
-                  inputType: TextInputType.visiblePassword,
-                  hintText: "Password",
-                  isObscure: _isObscure,
-                  save: (val) {},
-                  mySuffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      _isObscure ? Icons.visibility_off : Icons.visibility,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
+              MyPadding(
+                child: SizedBox(
+                  width: 235,
+                  child: TextFormField(
+                    autofocus: true,
+                    controller: _confPassController,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.visiblePassword,
+                    onSaved: (val) {},
+                    obscureText: _isConfPassObscure,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "This input field can't be empty!";
+                      } else if (value != _passController.text) {
+                        return "Password must be same as above!";
+                      }
+                      return null;
                     },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _isConfPassObscure
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: 20.0,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _isConfPassObscure = !_isConfPassObscure;
+                          });
+                        },
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Confirm Password",
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 30),
+                      hintStyle: const TextStyle(
+                          fontSize: 15, color: Color(0xffB89C9C)),
+                    ),
                   ),
                 ),
               ),
@@ -131,20 +179,21 @@ class _SignUpState extends State<SignUp> {
                     _saveForm();
                     try {
                       await Provider.of<AuthProvider>(context, listen: false)
-                          .signup(email, password);
+                          .signup(_emailController.text, _passController.text);
                     } on HttpException catch (error) {
-                      var errorMessage = 'Authentiacation Failed.';
+                      var errorMessage = 'Authentication Failed.';
                       if (error.toString().contains('EMAIL_EXISTS')) {
                         errorMessage = 'This emaill address is already in use';
+                        _emailController.text = "";
                       } else if (error.toString().contains('INVALID_EMAIL')) {
                         errorMessage = 'This is not a valid email address';
                       } else if (error.toString().contains('WEAK_PASSWORD')) {
                         errorMessage = 'This password is too weak.';
                       }
                       _showErrorDialog(errorMessage);
+                      _form.currentState?.reset();
                     } catch (error) {
-                      var errorMessage =
-                          'Authentiacation Failed. Please check your internet conection and try again later!';
+                      var errorMessage = 'Authentiacation Failed!';
                       _showErrorDialog(errorMessage);
                     }
                   },
