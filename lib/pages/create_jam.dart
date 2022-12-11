@@ -40,13 +40,16 @@ class _CreateJamPageState extends State<CreateJamPage> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController timeInput = TextEditingController();
   var newJam = Jam(
-      id: "",
-      title: "",
-      date: "",
-      time: "",
-      location: "",
-      description: "",
-      maxJamers: 2);
+    id: "",
+    title: "",
+    date: "",
+    time: "",
+    location: "",
+    description: "",
+    maxJamers: 2,
+    prefreableGenres: [],
+    prefreableInstruments: [],
+  );
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {
     final List<String>? results = await showDialog(
@@ -88,8 +91,20 @@ class _CreateJamPageState extends State<CreateJamPage> {
   bool isSwitched = false;
   bool value = false;
 
+  bool isFormValid() {
+    final isValid = _form.currentState?.validate();
+    if (isValid != null && isValid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void _saveForm() {
-    _form.currentState?.save();
+    final isValid = _form.currentState?.validate();
+    if (isFormValid()) {
+      _form.currentState?.save();
+    }
   }
 
   @override
@@ -119,6 +134,12 @@ class _CreateJamPageState extends State<CreateJamPage> {
               ),
               MyPadding(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "This input field can't be empty!";
+                    }
+                    return null;
+                  },
                   textInputAction: TextInputAction.next,
                   controller: dateInput, //editing controller of this TextField
                   decoration: const InputDecoration(
@@ -151,6 +172,12 @@ class _CreateJamPageState extends State<CreateJamPage> {
               ),
               MyPadding(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "This input field can't be empty!";
+                    }
+                    return null;
+                  },
                   textInputAction: TextInputAction.next,
                   controller: timeInput, //editing controller of this TextField
                   decoration: const InputDecoration(
@@ -192,6 +219,12 @@ class _CreateJamPageState extends State<CreateJamPage> {
 
               MyPadding(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "This input field can't be empty!";
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     newJam.description = value!;
                   },
@@ -211,23 +244,8 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 ),
               ),
               MyPadding(
-                child: Row(children: [
-                  const Text("Private"),
-                  const SizedBox(
-                    width: 53,
-                  ),
-                  Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
-                  ),
-                ]),
-              ),
-              MyPadding(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text("Max. Jamers"),
                     const SizedBox(
@@ -235,8 +253,14 @@ class _CreateJamPageState extends State<CreateJamPage> {
                     ),
                     SizedBox(
                       width: 44,
-                      height: 30,
+                      height: 50,
                       child: TextFormField(
+                        validator: (value) {
+                          if (value != null && value.isEmpty) {
+                            return "This input field can't be empty!";
+                          }
+                          return null;
+                        },
                         onSaved: (newValue) =>
                             (newJam.maxJamers = int.parse(newValue!)),
                         style: const TextStyle(fontSize: 14.0),
@@ -255,6 +279,23 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   ],
                 ),
               ),
+              MyPadding(
+                child: Row(children: [
+                  const Text("Private"),
+                  const SizedBox(
+                    width: 53,
+                  ),
+                  Switch(
+                    value: isSwitched,
+                    onChanged: (value) {
+                      setState(() {
+                        isSwitched = value;
+                      });
+                    },
+                  ),
+                ]),
+              ),
+
               MyPadding(
                 child: ElevatedButton(
                   onPressed: () {
@@ -318,17 +359,23 @@ class _CreateJamPageState extends State<CreateJamPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  _saveForm();
-                  final jamsData =
-                      Provider.of<JamsProvider>(context, listen: false);
-                  newJam.isPrivate = isSwitched;
-                  newJam.prefreableGenres = _selectedGenres;
-                  newJam.prefreableInstruments = _selectedInstruments;
+                  if (isFormValid()) {
+                    _saveForm();
+                    final jamsData =
+                        Provider.of<JamsProvider>(context, listen: false);
+                    newJam.isPrivate = isSwitched;
 
-                  jamsData.addJam(newJam);
-                  Navigator.of(context).pushNamed(
-                    JamsPage.routName,
-                  );
+                    newJam.prefreableGenres =
+                        _selectedGenres.isEmpty ? ["any"] : _selectedGenres;
+                    newJam.prefreableInstruments = _selectedInstruments.isEmpty
+                        ? ["any"]
+                        : _selectedInstruments;
+
+                    jamsData.addJam(newJam);
+                    Navigator.of(context).pushNamed(
+                      JamsPage.routName,
+                    );
+                  }
                 },
                 child: const Text("Create"),
               ),

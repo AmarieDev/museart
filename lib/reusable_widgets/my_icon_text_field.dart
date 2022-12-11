@@ -15,6 +15,12 @@ class CreateJamTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "This input field can't be empty!";
+        }
+        return null;
+      },
       textInputAction: TextInputAction.next,
       keyboardType: keybType,
       onSaved: save,
