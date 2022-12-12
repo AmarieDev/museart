@@ -31,7 +31,7 @@ class MyTextField extends StatelessWidget {
         textInputAction: TextInputAction.next,
         keyboardType: inputType,
         validator: (value) {
-          if (value != null && value.isEmpty) {
+          if (value == null || value.isEmpty) {
             return "This input field can't be empty!";
           }
           return null;

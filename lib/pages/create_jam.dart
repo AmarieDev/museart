@@ -101,7 +101,6 @@ class _CreateJamPageState extends State<CreateJamPage> {
   }
 
   void _saveForm() {
-    final isValid = _form.currentState?.validate();
     if (isFormValid()) {
       _form.currentState?.save();
     }

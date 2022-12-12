@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/data_models/user.dart';
 import 'package:flutter_application/pages/sign_in.dart';
 import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import '../reusable_widgets/my_text_field.dart';
@@ -23,6 +24,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _confPassController = TextEditingController();
+  UserCredentials user = UserCredentials();
+  String? _confPass;
   void _saveForm() {
     if (isFormValid()) {
       _form.currentState?.save();
@@ -46,7 +49,11 @@ class _SignUpState extends State<SignUp> {
               content: Text(message),
               actions: [
                 ElevatedButton(
-                  onPressed: (() => Navigator.of(ctx).pop()),
+                  onPressed: (() {
+                    _form.currentState!.deactivate();
+                    _form.currentState!.activate();
+                    Navigator.of(ctx).pop();
+                  }),
                   child: const Text('Okay'),
                   style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).colorScheme.secondary,
@@ -55,9 +62,6 @@ class _SignUpState extends State<SignUp> {
               ],
             ));
   }
-
-  late String email;
-  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +98,7 @@ class _SignUpState extends State<SignUp> {
                     inputType: TextInputType.emailAddress,
                     hintText: "Email",
                     save: (val) {
-                      email = val!;
+                      user.email = val!;
                     }),
               ),
               Padding(
@@ -104,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                   hintText: "Password",
                   isObscure: _isObscure,
                   save: (val) {
-                    password = val!;
+                    user.password = val!;
                   },
                   mySuffixIcon: IconButton(
                     icon: Icon(
@@ -126,11 +130,12 @@ class _SignUpState extends State<SignUp> {
                 child: SizedBox(
                   width: 235,
                   child: TextFormField(
-                    autofocus: true,
                     controller: _confPassController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.visiblePassword,
-                    onSaved: (val) {},
+                    onSaved: (val) {
+                      _confPass = val;
+                    },
                     obscureText: _isConfPassObscure,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -178,20 +183,20 @@ class _SignUpState extends State<SignUp> {
                   onPressed: () async {
                     _saveForm();
                     try {
-                      await Provider.of<AuthProvider>(context, listen: false)
-                          .signup(_emailController.text, _passController.text);
+                      if (_confPassController.text == _passController.text) {
+                        await Provider.of<AuthProvider>(context, listen: false)
+                            .signup(user.email, user.password);
+                      }
                     } on HttpException catch (error) {
                       var errorMessage = 'Authentication Failed.';
                       if (error.toString().contains('EMAIL_EXISTS')) {
                         errorMessage = 'This emaill address is already in use';
-                        _emailController.text = "";
                       } else if (error.toString().contains('INVALID_EMAIL')) {
                         errorMessage = 'This is not a valid email address';
                       } else if (error.toString().contains('WEAK_PASSWORD')) {
                         errorMessage = 'This password is too weak.';
                       }
                       _showErrorDialog(errorMessage);
-                      _form.currentState?.reset();
                     } catch (error) {
                       var errorMessage = 'Authentiacation Failed!';
                       _showErrorDialog(errorMessage);
