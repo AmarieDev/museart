@@ -185,7 +185,10 @@ class _SignUpState extends State<SignUp> {
                     try {
                       if (_confPassController.text == _passController.text) {
                         await Provider.of<AuthProvider>(context, listen: false)
-                            .signup(user.email, user.password);
+                            .signup(user.email, user.password)
+                            .then((_) {
+                          Navigator.pop(context);
+                        });
                       }
                     } on HttpException catch (error) {
                       var errorMessage = 'Authentication Failed.';
