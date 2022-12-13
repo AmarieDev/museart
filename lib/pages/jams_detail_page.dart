@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class JamDetailPage extends StatelessWidget {
   // final String title;
   // JamDetailPage(this.title);
-  static const routName = "/jam-detail";
+  static const routeName = "/jam-detail";
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,104 @@ class JamDetailPage extends StatelessWidget {
     final loadedJam =
         Provider.of<JamsProvider>(context, listen: false).findById(jamId);
     return Scaffold(
-        appBar: AppBar(
-      title: Text(loadedJam.title),
-    ));
+      appBar: AppBar(
+        iconTheme: IconTheme.of(context),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      //
+
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            width: MediaQuery.of(context).size.width / 5,
+            height: MediaQuery.of(context).size.width / 5,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              image: DecorationImage(
+                image: AssetImage('assets/images/david.jpg'),
+              ),
+            ),
+          ),
+          Text('folding person | Host'),
+          SizedBox(
+            height: 30,
+            child: TextButton(
+              onPressed: () {},
+              child: const Text(
+                "go to Profile >",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Location'),
+              Text(
+                '1,6 km',
+              ),
+            ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 4,
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Joined Users'),
+              Text(
+                '7/10',
+              ),
+            ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 4,
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(width: MediaQuery.of(context).size.width),
+            Text('Genre: Rock, Metal'),
+            Text('Looking for: Dine Mama'),
+          ])
+        ],
+      ),
+
+      // floatingActionButton: FloatingActionButton(onPressed: () {}),
+      bottomSheet: Container(
+        height: 100,
+        width: MediaQuery.of(context).size.width,
+        color: const Color(0xffD9D9D9),
+        child: Column(
+          children: [
+            Text(loadedJam.date + ' ' + loadedJam.time),
+            Text(loadedJam.title),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(loadedJam.description),
+                ElevatedButton(
+                  child: Text(
+                    'Join',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

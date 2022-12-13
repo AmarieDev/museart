@@ -109,7 +109,7 @@ class _SignInState extends State<SignIn> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(
-                      SignUp.routName,
+                      SignUp.routeName,
                     );
                   },
                   child: const Text(

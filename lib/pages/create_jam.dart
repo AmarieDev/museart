@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
-  static const routName = "/create-jam";
+  static const routeName = "/create-jam";
 
   @override
   State<CreateJamPage> createState() => _CreateJamPageState();
@@ -351,7 +351,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    JamsPage.routName,
+                    JamsPage.routeName,
                   );
                 },
                 child: const Text("Cancel"),
@@ -372,7 +372,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
 
                     jamsData.addJam(newJam);
                     Navigator.of(context).pushNamed(
-                      JamsPage.routName,
+                      JamsPage.routeName,
                     );
                   }
                 },

@@ -75,11 +75,11 @@ class MyApp extends StatelessWidget {
                             : const SignIn()),
                   ),
             routes: {
-              JamDetailPage.routName: (context) => JamDetailPage(),
-              JamsPage.routName: (context) => JamsPage(),
-              CreateJamPage.routName: (context) => CreateJamPage(),
-              SignIn.routName: (context) => SignIn(),
-              SignUp.routName: (context) => SignUp(),
+              JamDetailPage.routeName: (context) => JamDetailPage(),
+              JamsPage.routeName: (context) => JamsPage(),
+              CreateJamPage.routeName: (context) => CreateJamPage(),
+              SignIn.routeName: (context) => SignIn(),
+              SignUp.routeName: (context) => SignUp(),
             },
           ),
         ));

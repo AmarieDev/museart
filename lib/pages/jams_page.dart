@@ -10,7 +10,7 @@ import 'create_jam.dart';
 
 class JamsPage extends StatefulWidget {
   const JamsPage({Key? key}) : super(key: key);
-  static const routName = "/jams-page";
+  static const routeName = "/jams-page";
 
   @override
   State<JamsPage> createState() => _JamsPageState();
@@ -36,7 +36,7 @@ class _JamsPageState extends State<JamsPage> {
         itemBuilder: (ctx, i) => GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(
-              JamDetailPage.routName,
+              JamDetailPage.routeName,
               arguments: jams[i].id,
             );
           },
@@ -59,14 +59,14 @@ class _JamsPageState extends State<JamsPage> {
                 primary: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(SignIn.routName);
+                Navigator.of(context).pushNamed(SignIn.routeName);
               },
               child: const Text("Home"),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
-                  CreateJamPage.routName,
+                  CreateJamPage.routeName,
                 );
               },
               child: const Text("Create Jam"),
