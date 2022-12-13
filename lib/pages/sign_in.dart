@@ -8,7 +8,7 @@ import '../http_exception.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
-  static const routName = "/sign-in";
+  static const routeName = "/sign-in";
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -125,7 +125,7 @@ class _SignInState extends State<SignIn> {
                     await Provider.of<AuthProvider>(context, listen: false)
                         .signin(email, password);
                   } on HttpException catch (error) {
-                    var errorMessage = 'Authentiacation Failed!';
+                    var errorMessage = 'Authentication Failed!';
                     if (error.toString().contains('INVALID_EMAIL')) {
                       errorMessage = 'This is not a valid email address';
                     } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
@@ -135,7 +135,7 @@ class _SignInState extends State<SignIn> {
                     }
                     _showErrorDialog(errorMessage);
                   } catch (error) {
-                    var errorMessage = 'Authentiacation Failed!';
+                    var errorMessage = 'Authentication Failed!';
                     _showErrorDialog(errorMessage);
                   }
                 },

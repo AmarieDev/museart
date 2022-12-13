@@ -201,7 +201,7 @@ class _SignUpState extends State<SignUp> {
                       }
                       _showErrorDialog(errorMessage);
                     } catch (error) {
-                      var errorMessage = 'Authentiacation Failed!';
+                      var errorMessage = 'Authentication Failed!';
                       _showErrorDialog(errorMessage);
                     }
                   },
