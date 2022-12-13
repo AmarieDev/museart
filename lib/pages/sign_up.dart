@@ -215,10 +215,7 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SignIn()),
-                    );
+                    Navigator.pushNamed(context, "home");
                   },
                   child: const Text("  Back "),
                 ),

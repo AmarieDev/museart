@@ -59,7 +59,7 @@ class _JamsPageState extends State<JamsPage> {
                 primary: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(SignIn.routName);
+                Navigator.pushNamed(context, "home");
               },
               child: const Text("Home"),
             ),

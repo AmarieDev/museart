@@ -350,9 +350,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   primary: Theme.of(context).colorScheme.secondary,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    JamsPage.routName,
-                  );
+                  Navigator.of(context).pop();
                 },
                 child: const Text("Cancel"),
               ),
