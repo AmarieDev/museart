@@ -369,9 +369,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         : _selectedInstruments;
 
                     jamsData.addJam(newJam);
-                    Navigator.of(context).pushNamed(
-                      JamsPage.routName,
-                    );
+                    Navigator.of(context).pushNamed('home');
                   }
                 },
                 child: const Text("Create"),
