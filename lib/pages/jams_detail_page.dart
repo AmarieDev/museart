@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data_models/jam.dart';
 import '../providers/jams_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,9 +11,19 @@ class JamDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jamId = ModalRoute.of(context)?.settings.arguments as String;
-    final loadedJam =
-        Provider.of<JamsProvider>(context, listen: false).findById(jamId);
+    final jamId = ModalRoute.of(context)?.settings.arguments;
+    Jam loadedJam = Jam(
+        id: "id",
+        title: "title",
+        date: "date",
+        time: "time",
+        location: "location",
+        maxJamers: 2);
+    if (jamId != null) {
+      loadedJam = Provider.of<JamsProvider>(context, listen: false)
+          .findById(jamId.toString());
+    }
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconTheme.of(context),
@@ -38,7 +49,7 @@ class JamDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            Text('folding person | Host'),
+            const Text('folding person | Host'),
             SizedBox(
               height: 30,
               child: TextButton(
