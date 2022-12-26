@@ -31,20 +31,24 @@ class _JamsPageState extends State<JamsPage> {
     final jamsData = Provider.of<JamsProvider>(context);
     final jams = jamsData.jams;
     return Scaffold(
-      body: ListView.builder(
-        itemCount: jams.length,
-        itemBuilder: (ctx, i) => GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(
-              JamDetailPage.routeName,
-              arguments: jams[i].id,
-            );
-          },
-          child: ListTile(
-            leading: const Icon(Icons.music_note),
-            title: Text(jams[i].title),
-            subtitle: Text(jams[i].description),
-            trailing: Text("Date: " + jams[i].date + " Time: " + jams[i].time),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 100.0),
+        child: ListView.builder(
+          itemCount: jams.length,
+          itemBuilder: (ctx, i) => GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                JamDetailPage.routeName,
+                arguments: jams[i].id,
+              );
+            },
+            child: ListTile(
+              leading: const Icon(Icons.music_note),
+              title: Text(jams[i].title),
+              subtitle: Text(jams[i].description),
+              trailing:
+                  Text("Date: " + jams[i].date + " Time: " + jams[i].time),
+            ),
           ),
         ),
       ),
@@ -59,7 +63,7 @@ class _JamsPageState extends State<JamsPage> {
                 primary: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(SignIn.routeName);
+                Navigator.pushNamed(context, "home");
               },
               child: const Text("Home"),
             ),

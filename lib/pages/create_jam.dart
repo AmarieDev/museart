@@ -350,9 +350,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   primary: Theme.of(context).colorScheme.secondary,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    JamsPage.routeName,
-                  );
+                  Navigator.of(context).pop();
                 },
                 child: const Text("Cancel"),
               ),
@@ -371,9 +369,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         : _selectedInstruments;
 
                     jamsData.addJam(newJam);
-                    Navigator.of(context).pushNamed(
-                      JamsPage.routeName,
-                    );
+                    Navigator.of(context).pushNamed('home');
                   }
                 },
                 child: const Text("Create"),

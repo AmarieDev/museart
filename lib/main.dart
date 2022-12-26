@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
                             : const SignIn()),
                   ),
             routes: {
+              'home': (context) => auth.isAuth ? JamsPage() : SignIn(),
               JamDetailPage.routeName: (context) => JamDetailPage(),
               JamsPage.routeName: (context) => JamsPage(),
               CreateJamPage.routeName: (context) => CreateJamPage(),
