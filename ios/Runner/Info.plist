@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Need to get your location!</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+	<string>Need to get your location!</string>
 	<key>CFBundleDisplayName</key>
 	<string>Flutter Application</string>
 	<key>CFBundleExecutable</key>
