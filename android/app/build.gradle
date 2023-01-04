@@ -43,20 +43,28 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.flutter_application"
+        applicationId "project.museart"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+    signingConfigs {
+ release {
+    storeFile file("c:/Users/ammar/keystore.jks")
+    storePassword "46xy23xy963xy"
+    keyAlias "mykeystore"
+    keyPassword "46xy23xy963xy"
         }
     }
+    }
+
+    buildTypes {
+    release {
+    signingConfig signingConfigs.release
+    minifyEnabled true
+    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+}
 }
 
 flutter {
