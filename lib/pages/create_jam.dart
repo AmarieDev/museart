@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/jams_page.dart';
+import 'package:flutter_application/reusable_widgets/location_input.dart';
 
 import '../reusable_widgets/multi_select.dart';
 import '../reusable_widgets/my_icon_text_field.dart';
@@ -203,6 +204,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   onSaved: (val) => (newJam.time = val!),
                 ),
               ),
+              MyPadding(child: LocationInput()),
 
               MyPadding(
                 child: CreateJamTextField(
