@@ -44,26 +44,27 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "project.museart"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
     signingConfigs {
- release {
-    storeFile file("c:/Users/ammar/keystore.jks")
-    storePassword "46xy23xy963xy"
-    keyAlias "mykeystore"
-    keyPassword "46xy23xy963xy"
+        release {
+        storeFile file("c:/Users/ammar/keystore.jks")
+        storePassword "46xy23xy963xy"
+        keyAlias "mykeystore"
+        keyPassword "46xy23xy963xy"
+            }
         }
-    }
-    }
+    
 
     buildTypes {
-    release {
-    signingConfig signingConfigs.release
-    minifyEnabled true
-    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        release {
+        signingConfig signingConfigs.release
+        minifyEnabled true
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
 }
 }
 
