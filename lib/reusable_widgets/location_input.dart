@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:flutter_application/location_helper.dart';
+import 'map.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({Key? key}) : super(key: key);
@@ -19,6 +20,20 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (ctx) => const Map(
+          isSelecting: true,
+        ),
+      ),
+    );
+    if (selectedLocation == null) {
+      return;
+    } else {}
   }
 
   @override
@@ -62,7 +77,7 @@ class _LocationInputState extends State<LocationInput> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Perform some action
+                _selectOnMap();
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
