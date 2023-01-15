@@ -74,32 +74,35 @@ class _LocationInputState extends State<LocationInput> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                _getCurrentUserLocation();
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.location_on,
-                  ),
-                  SizedBox(width: 8),
-                  Text('Current Location'),
-                ],
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  _getCurrentUserLocation();
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Icon(
+                      Icons.location_on,
+                    ),
+                    Text('My Location'),
+                  ],
+                ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                _selectOnMap();
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.map),
-                  SizedBox(width: 8),
-                  Text('Select on Map'),
-                ],
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  _selectOnMap();
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Icon(Icons.map),
+                    SizedBox(width: 8),
+                    Text('Select on Map'),
+                  ],
+                ),
               ),
             )
           ],
