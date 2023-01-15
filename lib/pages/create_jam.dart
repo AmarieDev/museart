@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/location_helper.dart';
 import 'package:flutter_application/pages/jams_page.dart';
 import 'package:flutter_application/reusable_widgets/location_input.dart';
 
@@ -19,6 +21,7 @@ class CreateJamPage extends StatefulWidget {
 }
 
 class _CreateJamPageState extends State<CreateJamPage> {
+  late PlaceLocation _pickedLocation;
   List<String> _selectedInstruments = [];
   List<String> _selectedGenres = [];
   final List<String> _instuments = [
@@ -35,6 +38,10 @@ class _CreateJamPageState extends State<CreateJamPage> {
     'Jazz',
     'Rap',
   ];
+  void _selectPlace(double lat, double lng) {
+    _pickedLocation = PlaceLocation(lat: lat, lng: lng);
+  }
+
   late int _buttonState;
   final int _kInstrumentsState = 1;
   final int _kGenreState = 2;
@@ -204,20 +211,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   onSaved: (val) => (newJam.time = val!),
                 ),
               ),
-              MyPadding(child: LocationInput()),
-
-              MyPadding(
-                child: CreateJamTextField(
-                    hintText: "Location",
-                    icon: const Icon(
-                      Icons.location_on_rounded,
-                    ),
-                    keybType: TextInputType.streetAddress,
-                    save: (val) {
-                      newJam.location = val!;
-                    }),
-              ),
-
+              MyPadding(child: LocationInput(_selectPlace)),
               MyPadding(
                 child: TextFormField(
                   validator: (value) {
@@ -357,7 +351,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 child: const Text("Cancel"),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (isFormValid()) {
                     _saveForm();
                     final jamsData =
@@ -369,6 +363,13 @@ class _CreateJamPageState extends State<CreateJamPage> {
                     newJam.prefreableInstruments = _selectedInstruments.isEmpty
                         ? ["any"]
                         : _selectedInstruments;
+                    final address = await LocationHelper.getLocationAddreass(
+                        _pickedLocation.lat, _pickedLocation.lng);
+                    PlaceLocation locationData = PlaceLocation(
+                        lat: _pickedLocation.lat,
+                        lng: _pickedLocation.lng,
+                        address: address);
+                    newJam.location = locationData.address;
 
                     jamsData.addJam(newJam);
                     Navigator.of(context).pushNamed('home');

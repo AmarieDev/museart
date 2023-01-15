@@ -1,9 +1,11 @@
+import 'package:flutter_application/data_models/PlaceLocation.dart';
+
 class Jam {
   String id;
   String title;
   String date;
   String time;
-  String location;
+  String? location;
   String description;
   int maxJamers;
   bool isPrivate;

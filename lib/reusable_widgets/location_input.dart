@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter_application/location_helper.dart';
 import 'map.dart';
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({Key? key}) : super(key: key);
+  final Function onSelectPlace;
+  // ignore: use_key_in_widget_constructors
+  const LocationInput(this.onSelectPlace);
 
   @override
   State<LocationInput> createState() => _LocationInputState();
@@ -13,17 +16,26 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
 
-  Future<void> _getCurrentUserLocation() async {
-    final locData = await Location().getLocation();
+  void _showPreview(double? lat, double? lng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-        latitude: locData.latitude, longitude: locData.longitude);
+        latitude: lat, longitude: lng);
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
   }
 
+  Future<void> _getCurrentUserLocation() async {
+    try {
+      final locData = await Location().getLocation();
+      _showPreview(locData.latitude, locData.longitude);
+      widget.onSelectPlace(locData.latitude, locData.longitude);
+    } catch (error) {
+      return;
+    }
+  }
+
   Future<void> _selectOnMap() async {
-    final selectedLocation = await Navigator.of(context).push(
+    final selectedLocation = await Navigator.of(context).push<LatLng>(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => const Map(
@@ -33,7 +45,9 @@ class _LocationInputState extends State<LocationInput> {
     );
     if (selectedLocation == null) {
       return;
-    } else {}
+    }
+    _showPreview(selectedLocation.latitude, selectedLocation.longitude);
+    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
@@ -47,7 +61,7 @@ class _LocationInputState extends State<LocationInput> {
           width: double.infinity,
           alignment: Alignment.center,
           child: _previewImageUrl == null
-              ? Text(
+              ? const Text(
                   'No Location Chossen',
                   textAlign: TextAlign.center,
                 )
