@@ -25,93 +25,126 @@ class JamDetailPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconTheme.of(context),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      //
-
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              width: MediaQuery.of(context).size.width / 5,
-              height: MediaQuery.of(context).size.width / 5,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                image: DecorationImage(
-                  image: AssetImage('assets/images/david.jpg'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 25, 20, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width / 5,
+                height: MediaQuery.of(context).size.width / 5,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/david.jpg'),
+                  ),
                 ),
               ),
-            ),
-            const Text('folding person | Host'),
-            SizedBox(
-              height: 30,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "go to Profile >",
-                  style: TextStyle(color: Colors.black),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'folding person',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const Text(" | Host")
+                ],
+              ),
+              SizedBox(
+                height: 20,
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "go to Profile >",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Location'),
-                Text(
-                  '1,6 km',
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 7),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Location'),
+                  ],
                 ),
-              ],
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 5,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 0, 0, 0),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Joined Users'),
-                Text(
-                  '7/10',
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 5,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
-              ],
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 5,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 0, 0, 0),
               ),
-            ),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(width: MediaQuery.of(context).size.width),
-              const Text('Genre: Rock, Metal'),
-              const Text('Looking for: Dine Mama'),
-            ])
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 7),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Joined Users'),
+                    Chip(
+                      label: Text('7/10',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 5,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+              ),
+              Container(
+                height: 60,
+              ),
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(width: MediaQuery.of(context).size.width),
+                    const Text('Genre: Rock, Metal'),
+                    const Text('Looking for: Dine Mama'),
+                  ]),
+              SizedBox(
+                height: 100,
+              ),
+            ],
+          ),
         ),
       ),
 
       // floatingActionButton: FloatingActionButton(onPressed: () {}),
       bottomSheet: Container(
-        height: 100,
+        height: 125,
         width: MediaQuery.of(context).size.width,
         color: const Color(0xffD9D9D9),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(loadedJam.date + ' ' + loadedJam.time),
-            Text(loadedJam.title),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
+              child: Text(
+                loadedJam.date + ' ' + loadedJam.time,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                loadedJam.title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
