@@ -14,7 +14,7 @@ import 'package:intl/intl.dart';
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
-  static const routName = "/create-jam";
+  static const routeName = "/create-jam";
 
   @override
   State<CreateJamPage> createState() => _CreateJamPageState();
