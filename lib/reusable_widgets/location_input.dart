@@ -71,41 +71,47 @@ class _LocationInputState extends State<LocationInput> {
                   width: double.infinity,
                 ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  _getCurrentUserLocation();
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(
-                      Icons.location_on,
-                    ),
-                    Text('My Location'),
-                  ],
+        Padding(
+          padding: const EdgeInsets.only(top: 6.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _getCurrentUserLocation();
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(
+                        Icons.location_on,
+                      ),
+                      Text('My Location'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  _selectOnMap();
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.map),
-                    SizedBox(width: 8),
-                    Text('Select on Map'),
-                  ],
-                ),
+              SizedBox(
+                width: 10,
               ),
-            )
-          ],
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _selectOnMap();
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.map),
+                      SizedBox(width: 8),
+                      Text('Select on Map'),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ],
     );

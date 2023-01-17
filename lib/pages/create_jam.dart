@@ -211,7 +211,9 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   onSaved: (val) => (newJam.time = val!),
                 ),
               ),
-              MyPadding(child: LocationInput(_selectPlace)),
+              MyPadding(
+                child: LocationInput(_selectPlace),
+              ),
               MyPadding(
                 child: TextFormField(
                   validator: (value) {
