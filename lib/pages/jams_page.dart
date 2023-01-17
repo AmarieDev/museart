@@ -32,7 +32,7 @@ class _JamsPageState extends State<JamsPage> {
     final jams = jamsData.jams;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 100.0),
+        padding: const EdgeInsets.only(bottom: 0),
         child: ListView.builder(
           itemCount: jams.length,
           itemBuilder: (ctx, i) => GestureDetector(
@@ -50,40 +50,6 @@ class _JamsPageState extends State<JamsPage> {
                   Text("Date: " + jams[i].date + " Time: " + jams[i].time),
             ),
           ),
-        ),
-      ),
-      bottomSheet: Container(
-        height: 70,
-        color: const Color(0xffC0A0C1),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).colorScheme.secondary,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, "home");
-              },
-              child: const Text("Home"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  CreateJamPage.routeName,
-                );
-              },
-              child: const Text("Create Jam"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed("/");
-
-                Provider.of<AuthProvider>(context, listen: false).logout();
-              },
-              child: const Text("logout"),
-            ),
-          ],
         ),
       ),
     );

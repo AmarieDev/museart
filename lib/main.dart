@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/create_jam.dart';
+import 'package:flutter_application/pages/home_page.dart';
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/pages/jams_page.dart';
 import 'pages/sign_in.dart';
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
             home: auth.isAuth
-                ? JamsPage()
+                ? HomePage()
                 : FutureBuilder(
                     future: auth.tryAutoLogin(),
                     builder: (context, authResultSnapshot) =>
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
                             : const SignIn()),
                   ),
             routes: {
-              'home': (context) => auth.isAuth ? JamsPage() : SignIn(),
+              'home': (context) => auth.isAuth ? HomePage() : SignIn(),
               JamDetailPage.routeName: (context) => JamDetailPage(),
               JamsPage.routeName: (context) => JamsPage(),
               CreateJamPage.routeName: (context) => CreateJamPage(),
