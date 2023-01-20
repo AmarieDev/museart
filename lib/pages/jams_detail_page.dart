@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/reusable_widgets/location_input.dart';
+import 'package:flutter_application/reusable_widgets/location_output.dart';
 import '../data_models/jam.dart';
 import '../providers/jams_provider.dart';
 import 'package:provider/provider.dart';
 
 // ignore: use_key_in_widget_constructors
-class JamDetailPage extends StatelessWidget {
+class JamDetailPage extends StatefulWidget {
   // final String title;
   // JamDetailPage(this.title);
   static const routeName = "/jam-detail";
+
+  @override
+  State<JamDetailPage> createState() => _JamDetailPageState();
+}
+
+class _JamDetailPageState extends State<JamDetailPage> {
+  late PlaceLocation _pickedLocation;
+
+  void _selectedPlace(double lat, double lng) {
+    _pickedLocation = PlaceLocation(lat: lat, lng: lng);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +31,15 @@ class JamDetailPage extends StatelessWidget {
         title: "title",
         date: "date",
         time: "time",
-        location: "location",
+        location: null,
         maxJamers: 2);
     if (jamId != null) {
       loadedJam = Provider.of<JamsProvider>(context, listen: false)
           .findById(jamId.toString());
     }
+    final String _genres = loadedJam.prefreableGenres.join(', ');
+    final String _instuments = loadedJam.prefreableInstruments.join(', ');
+    int joinedUsers = 0;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -32,8 +49,8 @@ class JamDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width / 5,
-                height: MediaQuery.of(context).size.width / 5,
+                width: 80,
+                height: 80,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
@@ -45,15 +62,15 @@ class JamDetailPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'folding person',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    "Ammar abi",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Text(" | Host")
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 35,
                 child: TextButton(
                   onPressed: () {},
                   child: const Text(
@@ -66,27 +83,31 @@ class JamDetailPage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 7),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text('Location'),
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 5,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 0, 0, 0),
+                height: 190,
+                child: LocationOutput(
+                  lat: loadedJam.location!.lat,
+                  lng: loadedJam.location!.lng,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 7),
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Joined Users'),
+                    const Text('Joined Users'),
                     Chip(
-                      label: Text('7/10',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      label: Text(
+                          joinedUsers.toString() +
+                              '/' +
+                              loadedJam.maxJamers.toString(),
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
                       backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -96,25 +117,25 @@ class JamDetailPage extends StatelessWidget {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 5,
+                width: double.infinity,
+                height: 190,
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
-              Container(
-                height: 60,
+              const SizedBox(
+                height: 30,
               ),
               Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(width: MediaQuery.of(context).size.width),
-                    const Text('Genre: Rock, Metal'),
-                    const Text('Looking for: Dine Mama'),
+                    Text("genres: " + _genres),
+                    Text("Looking for: " + _instuments),
                   ]),
-              SizedBox(
-                height: 100,
+              const SizedBox(
+                height: 130,
               ),
             ],
           ),
@@ -140,7 +161,7 @@ class JamDetailPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 loadedJam.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
