@@ -5,7 +5,7 @@ class Jam {
   String title;
   String date;
   String time;
-  String? location;
+  PlaceLocation? location;
   String description;
   int maxJamers;
   bool isPrivate;

@@ -52,7 +52,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     title: "",
     date: "",
     time: "",
-    location: "",
+    location: PlaceLocation(lat: 0, lng: 0),
     description: "",
     maxJamers: 2,
     prefreableGenres: [],
@@ -371,7 +371,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         lat: _pickedLocation.lat,
                         lng: _pickedLocation.lng,
                         address: address);
-                    newJam.location = locationData.address;
+                    newJam.location = locationData;
 
                     jamsData.addJam(newJam);
                     Navigator.of(context).pushNamed('home');

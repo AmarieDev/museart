@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/data_models/PlaceLocation.dart';
 import 'dart:convert';
 import '../data_models/jam.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +30,9 @@ class JamsProvider with ChangeNotifier {
         'title': value.title,
         'date': value.date,
         'time': value.time,
-        'location': value.location,
+        'address': value.location?.address,
+        'lat': value.location?.lat,
+        'lng': value.location?.lng,
         'max jamers': value.maxJamers,
         'description': value.description,
         'private': value.isPrivate,
@@ -69,7 +72,8 @@ class JamsProvider with ChangeNotifier {
           title: value['title'],
           date: value['date'],
           time: value['time'],
-          location: value['location'],
+          location: PlaceLocation(
+              lat: value['lat'], lng: value['lng'], address: value['adderss']),
           maxJamers: value['max jamers'],
           description: value['description'],
           isPrivate: value['private'],
