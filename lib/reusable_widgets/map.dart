@@ -44,12 +44,15 @@ class _MapState extends State<Map> {
                 LatLng(widget.initialLocation.lat, widget.initialLocation.lng),
             zoom: 16),
         onTap: widget.isSelecting ? _selectLocation : null,
-        markers: _pickedLocation != null
-            ? {
-                Marker(
-                    markerId: const MarkerId('m1'), position: _pickedLocation!)
-              }
-            : {const Marker(visible: false, markerId: MarkerId('m2'))},
+        markers: {
+          Marker(
+            visible:
+                widget.isSelecting && _pickedLocation == null ? false : true,
+            markerId: const MarkerId('m2'),
+            position: _pickedLocation ??
+                LatLng(widget.initialLocation.lat, widget.initialLocation.lng),
+          )
+        },
       ),
     );
   }

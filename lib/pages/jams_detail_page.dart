@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/PlaceLocation.dart';
-import 'package:flutter_application/reusable_widgets/location_input.dart';
+import '../reusable_widgets/map.dart';
 import 'package:flutter_application/reusable_widgets/location_output.dart';
 import '../data_models/jam.dart';
 import '../providers/jams_provider.dart';
@@ -91,13 +91,27 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 180,
-                child: LocationOutput(
-                  lat: loadedJam.location!.lat,
-                  lng: loadedJam.location!.lng,
+              GestureDetector(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 180,
+                  child: LocationOutput(
+                    lat: loadedJam.location!.lat,
+                    lng: loadedJam.location!.lng,
+                  ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (ctx) => Map(
+                      isSelecting: false,
+                      initialLocation: PlaceLocation(
+                        lat: loadedJam.location!.lat,
+                        lng: loadedJam.location!.lng,
+                      ),
+                    ),
+                  ));
+                },
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
