@@ -48,14 +48,17 @@ class _JamDetailPageState extends State<JamDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 80,
-                height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/david.jpg'),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 3.0),
+                child: Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/david.jpg'),
+                    ),
                   ),
                 ),
               ),
@@ -90,7 +93,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: 190,
+                height: 180,
                 child: LocationOutput(
                   lat: loadedJam.location!.lat,
                   lng: loadedJam.location!.lng,
@@ -116,15 +119,15 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 190,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 0, 0, 0),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 180,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
               ),
               Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +176,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   ElevatedButton(
                     child: const Text(
                       'Join',
-                      style: TextStyle(fontSize: 20.0),
+                      style: TextStyle(fontSize: 20.0, color: Colors.black),
                     ),
                     onPressed: () {},
                   ),
