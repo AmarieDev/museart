@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/PlaceLocation.dart';
 import 'package:flutter_application/location_helper.dart';
-import 'package:flutter_application/pages/jams_page.dart';
 import 'package:flutter_application/reusable_widgets/location_input.dart';
 
 import '../reusable_widgets/multi_select.dart';
@@ -164,7 +163,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         lastDate: DateTime(2101));
                     if (pickedDate != null) {
                       String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                          DateFormat('yyyy.MM.dd').format(pickedDate);
 
                       setState(() {
                         dateInput.text =
