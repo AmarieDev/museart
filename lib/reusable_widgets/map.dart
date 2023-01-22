@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/PlaceLocation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Map extends StatefulWidget {
+class MapPage extends StatefulWidget {
   final PlaceLocation initialLocation;
   final bool isSelecting;
-  const Map({
+  const MapPage({
     this.initialLocation = const PlaceLocation(lat: 37.465465, lng: -122.135),
     this.isSelecting = false,
   });
 
   @override
-  State<Map> createState() => _MapState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-class _MapState extends State<Map> {
+class _MapPageState extends State<MapPage> {
   LatLng? _pickedLocation;
   void _selectLocation(LatLng position) {
     setState(() {
@@ -26,7 +26,7 @@ class _MapState extends State<Map> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Map"),
+        title: const Text("MapPage"),
         actions: [
           if (widget.isSelecting)
             IconButton(
