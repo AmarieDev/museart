@@ -22,9 +22,10 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider.value(value: AuthProvider()),
           ChangeNotifierProxyProvider<AuthProvider, JamsProvider>(
-            create: (_) => JamsProvider(null, []),
+            create: (_) => JamsProvider(null, null, []),
             update: (context, auth, previousJams) => (JamsProvider(
               auth.token,
+              auth.getCurrentUserId(),
               previousJams == null ? [] : previousJams.jams,
             )),
           ),

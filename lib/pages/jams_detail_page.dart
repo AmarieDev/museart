@@ -5,42 +5,37 @@ import 'package:flutter_application/reusable_widgets/location_output.dart';
 import '../data_models/jam.dart';
 import '../providers/jams_provider.dart';
 import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
-// ignore: use_key_in_widget_constructors
 class JamDetailPage extends StatefulWidget {
-  // final String title;
-  // JamDetailPage(this.title);
   static const routeName = "/jam-detail";
+  late bool isJoined;
 
   @override
   State<JamDetailPage> createState() => _JamDetailPageState();
 }
 
 class _JamDetailPageState extends State<JamDetailPage> {
-  late PlaceLocation _pickedLocation;
-
-  void _selectedPlace(double lat, double lng) {
-    _pickedLocation = PlaceLocation(lat: lat, lng: lng);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final jamId = ModalRoute.of(context)?.settings.arguments;
+    final jamsProv = Provider.of<JamsProvider>(context, listen: true);
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final String jamId = arguments['id'];
+    widget.isJoined = arguments['isJoined'];
+
     Jam loadedJam = Jam(
-        id: "id",
-        title: "title",
-        date: "date",
-        time: "time",
-        location: null,
-        maxJamers: 2);
-    if (jamId != null) {
-      loadedJam = Provider.of<JamsProvider>(context, listen: false)
-          .findById(jamId.toString());
-    }
+      id: "id",
+      title: "title",
+      date: "date",
+      time: "time",
+      location: null,
+      maxJamers: 2,
+    );
+    loadedJam = jamsProv.findById(jamId.toString());
     final String _genres = loadedJam.prefreableGenres.join(', ');
     final String _instuments = loadedJam.prefreableInstruments.join(', ');
     int joinedUsers = 0;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -103,7 +98,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     fullscreenDialog: true,
-                    builder: (ctx) => Map(
+                    builder: (ctx) => MapPage(
                       isSelecting: false,
                       initialLocation: PlaceLocation(
                         lat: loadedJam.location!.lat,
@@ -171,7 +166,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
               padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
               child: Text(
                 loadedJam.date + ' ' + loadedJam.time,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -188,11 +183,15 @@ class _JamDetailPageState extends State<JamDetailPage> {
                 children: [
                   Text(loadedJam.description),
                   ElevatedButton(
-                    child: const Text(
-                      'Join',
-                      style: TextStyle(fontSize: 20.0, color: Colors.black),
+                    onPressed: () {
+                      jamsProv.joinUnjoinJam(loadedJam.id);
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      widget.isJoined ? 'unjoin' : 'join',
+                      style:
+                          const TextStyle(fontSize: 20.0, color: Colors.black),
                     ),
-                    onPressed: () {},
                   ),
                 ],
               ),

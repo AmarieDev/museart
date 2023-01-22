@@ -1,12 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
-import 'package:flutter_application/pages/sign_in.dart';
-import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
-import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import "package:provider/provider.dart";
-
-import 'create_jam.dart';
 
 class JamsPage extends StatefulWidget {
   const JamsPage({Key? key}) : super(key: key);
@@ -29,6 +24,7 @@ class _JamsPageState extends State<JamsPage> {
   @override
   Widget build(BuildContext context) {
     final jamsData = Provider.of<JamsProvider>(context);
+
     final jams = jamsData.jams;
     return Scaffold(
       body: Padding(
@@ -36,11 +32,10 @@ class _JamsPageState extends State<JamsPage> {
         child: ListView.builder(
           itemCount: jams.length,
           itemBuilder: (ctx, i) => GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                JamDetailPage.routeName,
-                arguments: jams[i].id,
-              );
+            onTap: () async {
+              final isJoined = await jamsData.hasAlreadyJoined(jams[i].id);
+              Navigator.of(context).pushNamed(JamDetailPage.routeName,
+                  arguments: {'id': jams[i].id, 'isJoined': isJoined});
             },
             child: ListTile(
               leading: const Icon(Icons.music_note),

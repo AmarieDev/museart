@@ -13,8 +13,9 @@ class JamsProvider with ChangeNotifier {
   }
 
   final String? authToken;
+  final String? _currentUser;
 
-  JamsProvider(this.authToken, this._jams);
+  JamsProvider(this.authToken, this._currentUser, this._jams);
 
   Jam findById(String id) {
     return _jams.firstWhere((element) => element.id == id);
@@ -37,7 +38,8 @@ class JamsProvider with ChangeNotifier {
         'description': value.description,
         'private': value.isPrivate,
         'prefreable genres': value.prefreableGenres,
-        'prefreable instruments': value.prefreableInstruments
+        'prefreable instruments': value.prefreableInstruments,
+        'joined users': value.joinedUsers,
       }),
     )
         .then((response) {
@@ -52,11 +54,53 @@ class JamsProvider with ChangeNotifier {
         isPrivate: value.isPrivate,
         prefreableGenres: value.prefreableGenres,
         prefreableInstruments: value.prefreableInstruments,
+        joinedUsers: value.joinedUsers,
       );
+      joinUnjoinJam(newJam.id);
       _jams.add(newJam);
       //notify every listener that a change has happen
       notifyListeners();
     });
+  }
+
+  Future<void> joinUnjoinJam(String jamId) async {
+    final url = Uri.parse(
+        "https://museart-351c7-default-rtdb.firebaseio.com/jams/$jamId.json?auth=$authToken");
+    final getResponse = await http.get(url);
+    final element = json.decode(getResponse.body);
+    List<dynamic> list = List<String>.from(element["joined users"]);
+    if (!await hasAlreadyJoined(jamId)) {
+      list.add(_currentUser);
+      final update = {"joined users": list};
+      var response = await http.patch(url, body: json.encode(update));
+      if (response.statusCode != 200) {
+        print('Error: ${response.statusCode}');
+        return;
+      }
+    } else {
+      list.remove(_currentUser);
+      final update = {"joined users": list};
+      var response = await http.patch(url, body: json.encode(update));
+      if (response.statusCode != 200) {
+        print('Error: ${response.statusCode}');
+        return;
+      }
+    }
+  }
+
+  Future<bool> hasAlreadyJoined(String jamId) async {
+    final url = Uri.parse(
+        "https://museart-351c7-default-rtdb.firebaseio.com/jams/$jamId.json?auth=$authToken");
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      var joinedUsers = data['joined users'];
+      if (joinedUsers != null && joinedUsers.contains(_currentUser)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   Future<void> fetchJams() async {
@@ -67,19 +111,24 @@ class JamsProvider with ChangeNotifier {
       final fetchedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Jam> loadedJams = [];
       fetchedData.forEach((key, value) {
-        loadedJams.add(Jam(
-          id: key,
-          title: value['title'],
-          date: value['date'],
-          time: value['time'],
-          location: PlaceLocation(
-              lat: value['lat'], lng: value['lng'], address: value['adderss']),
-          maxJamers: value['max jamers'],
-          description: value['description'],
-          isPrivate: value['private'],
-          prefreableGenres: value['prefreable genres'],
-          prefreableInstruments: value['prefreable instruments'],
-        ));
+        loadedJams.add(
+          Jam(
+            id: key,
+            title: value['title'],
+            date: value['date'],
+            time: value['time'],
+            location: PlaceLocation(
+                lat: value['lat'],
+                lng: value['lng'],
+                address: value['adderss']),
+            maxJamers: value['max jamers'],
+            description: value['description'],
+            isPrivate: value['private'],
+            prefreableGenres: value['prefreable genres'],
+            prefreableInstruments: value['prefreable instruments'],
+            joinedUsers: value['joined users'],
+          ),
+        );
       });
       _jams = loadedJams;
       notifyListeners();

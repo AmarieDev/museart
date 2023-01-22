@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/PlaceLocation.dart';
 import 'package:flutter_application/location_helper.dart';
 import 'package:flutter_application/reusable_widgets/location_input.dart';
-
+import 'package:flutter_application/providers/jams_provider.dart';
+import "package:provider/provider.dart";
+import 'package:intl/intl.dart';
 import '../reusable_widgets/multi_select.dart';
 import '../reusable_widgets/my_icon_text_field.dart';
 import '../reusable_widgets/my_padding.dart';
 import '../data_models/jam.dart';
-import 'package:flutter_application/providers/jams_provider.dart';
-import "package:provider/provider.dart";
-import 'package:intl/intl.dart';
+
 
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
@@ -56,6 +56,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     maxJamers: 2,
     prefreableGenres: [],
     prefreableInstruments: [],
+    joinedUsers: [''],
   );
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {

@@ -12,6 +12,10 @@ class AuthProvider with ChangeNotifier {
   String? _userId;
   Timer? _authTimer;
 
+  String? getCurrentUserId() {
+    return _userId;
+  }
+
   Future<void> auth(String email, String password, String urlSegment) async {
     final url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyA6LKfa-j9at9EfjcxPLGaypjPe5PLDJZc');

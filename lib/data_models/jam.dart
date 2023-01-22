@@ -11,6 +11,7 @@ class Jam {
   bool isPrivate;
   List<dynamic> prefreableGenres;
   List<dynamic> prefreableInstruments;
+  List<dynamic> joinedUsers = [''];
   Jam({
     required this.id,
     required this.title,
@@ -22,6 +23,7 @@ class Jam {
     this.description = "",
     this.prefreableGenres = const [],
     this.prefreableInstruments = const [],
+    this.joinedUsers = const [],
   });
   void makeJamPrivate() {
     isPrivate = true;
