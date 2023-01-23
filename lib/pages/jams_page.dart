@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
+import 'package:flutter_application/reusable_widgets/event_map.dart';
 import "package:provider/provider.dart";
+import 'package:location/location.dart';
 
 class JamsPage extends StatefulWidget {
   const JamsPage({Key? key}) : super(key: key);
@@ -12,9 +15,12 @@ class JamsPage extends StatefulWidget {
 }
 
 class _JamsPageState extends State<JamsPage> {
+  Location location = Location();
+  Future<LocationData>? _future;
   @override
   void initState() {
     Provider.of<JamsProvider>(context, listen: false).fetchJams();
+    _future = location.getLocation();
     // work around if listen is set to true
     // Future.delayed(Duration.zero).then((value) =>
     //    Provider.of<JamsProvider>(context, listen: false).fetchJams());
@@ -33,6 +39,12 @@ class _JamsPageState extends State<JamsPage> {
     }
 
     final jams = jamsData.jams;
+    LocationData _currentLocation;
+    Future<LocationData> getCurrentLocation() async {
+      _currentLocation = await location.getLocation();
+      return _currentLocation;
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(bottom: 0),
@@ -87,6 +99,39 @@ class _JamsPageState extends State<JamsPage> {
               ),
             ),
           ),
+        ),
+      ),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomCenter,
+        child: FloatingActionButton(
+          child: const Icon(
+            Icons.public,
+            size: 48.0,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            getCurrentLocation();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FutureBuilder(
+                        future: _future,
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return EventMapPage(snapshot.data);
+                            }
+                          } else {
+                            return Scaffold(
+                              body: Center(child: CircularProgressIndicator()),
+                            );
+                          }
+                        })));
+          },
         ),
       ),
     );
