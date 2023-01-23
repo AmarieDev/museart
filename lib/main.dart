@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                   .copyWith(secondary: const Color(0xffFF8383)),
 
               // Define the default font family.
-              //fontFamily: 'Georgia',
+              fontFamily: 'IBMPlexSans',
 
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
