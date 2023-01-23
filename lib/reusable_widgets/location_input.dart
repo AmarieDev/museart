@@ -62,7 +62,7 @@ class _LocationInputState extends State<LocationInput> {
           alignment: Alignment.center,
           child: _previewImageUrl == null
               ? const Text(
-                  'No Location Chossen',
+                  'No Location Chosen',
                   textAlign: TextAlign.center,
                 )
               : Image.network(

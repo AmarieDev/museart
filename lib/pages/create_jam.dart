@@ -329,58 +329,38 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         ))
                     .toList(),
               ),
-
               const SizedBox(
-                height: 128,
-              ),
+                height: 20,
+              )
             ]),
           ),
         ),
-        bottomSheet: Container(
-          height: 70,
-          color: const Color(0xffC0A0C1),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.secondary,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("Cancel"),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (isFormValid()) {
-                    _saveForm();
-                    final jamsData =
-                        Provider.of<JamsProvider>(context, listen: false);
-                    newJam.isPrivate = isSwitched;
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () async {
+              if (isFormValid()) {
+                _saveForm();
+                final jamsData =
+                    Provider.of<JamsProvider>(context, listen: false);
+                newJam.isPrivate = isSwitched;
 
-                    newJam.prefreableGenres =
-                        _selectedGenres.isEmpty ? ["any"] : _selectedGenres;
-                    newJam.prefreableInstruments = _selectedInstruments.isEmpty
-                        ? ["any"]
-                        : _selectedInstruments;
-                    final address = await LocationHelper.getLocationAddreass(
-                        _pickedLocation.lat, _pickedLocation.lng);
-                    PlaceLocation locationData = PlaceLocation(
-                        lat: _pickedLocation.lat,
-                        lng: _pickedLocation.lng,
-                        address: address);
-                    newJam.location = locationData;
+                newJam.prefreableGenres =
+                    _selectedGenres.isEmpty ? ["any"] : _selectedGenres;
+                newJam.prefreableInstruments = _selectedInstruments.isEmpty
+                    ? ["any"]
+                    : _selectedInstruments;
+                final address = await LocationHelper.getLocationAddreass(
+                    _pickedLocation.lat, _pickedLocation.lng);
+                PlaceLocation locationData = PlaceLocation(
+                    lat: _pickedLocation.lat,
+                    lng: _pickedLocation.lng,
+                    address: address);
+                newJam.location = locationData;
 
-                    jamsData.addJam(newJam);
-                    Navigator.of(context).pushNamed('home');
-                  }
-                },
-                child: const Text("Create"),
-              ),
-            ],
-          ),
-        ),
+                jamsData.addJam(newJam);
+                Navigator.of(context).pushNamed('home');
+              }
+            }),
       ),
     );
   }
