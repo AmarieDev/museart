@@ -26,7 +26,7 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MapPage"),
+        title: const Text("Map"),
         actions: [
           if (widget.isSelecting)
             IconButton(

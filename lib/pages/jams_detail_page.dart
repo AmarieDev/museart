@@ -44,7 +44,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 3.0),
+                padding: const EdgeInsets.fromLTRB(0, 3, 0, 3.0),
                 child: Container(
                   width: 90,
                   height: 90,
