@@ -29,7 +29,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
       title: "title",
       date: "date",
       time: "time",
-      location: null,
+      location: PlaceLocation(lat: 0, lng: 0),
       maxJamers: 2,
     );
     loadedJam = jamsProv.findById(jamId.toString());
@@ -91,8 +91,8 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   width: MediaQuery.of(context).size.width,
                   height: 180,
                   child: LocationOutput(
-                    lat: loadedJam.location!.lat,
-                    lng: loadedJam.location!.lng,
+                    lat: loadedJam.location.lat,
+                    lng: loadedJam.location.lng,
                   ),
                 ),
                 onTap: () {
@@ -101,8 +101,8 @@ class _JamDetailPageState extends State<JamDetailPage> {
                     builder: (ctx) => MapPage(
                       isSelecting: false,
                       initialLocation: PlaceLocation(
-                        lat: loadedJam.location!.lat,
-                        lng: loadedJam.location!.lng,
+                        lat: loadedJam.location.lat,
+                        lng: loadedJam.location.lng,
                       ),
                     ),
                   ));
@@ -114,17 +114,22 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Joined Users'),
-                    Chip(
-                      label: Text(
-                          joinedUsers.toString() +
-                              '/' +
-                              loadedJam.maxJamers.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4.0),
+                      child: Chip(
+                        padding: EdgeInsets.all(0),
+                        label: Text(
+                            (loadedJam.joinedUsers.length - 1).toString() +
+                                '/' +
+                                loadedJam.maxJamers.toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 12)),
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -143,7 +148,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(width: MediaQuery.of(context).size.width),
-                    Text("genres: " + _genres),
+                    Text("Genre: " + _genres),
                     Text("Looking for: " + _instuments),
                   ]),
               const SizedBox(
@@ -184,7 +189,10 @@ class _JamDetailPageState extends State<JamDetailPage> {
                   Text(loadedJam.description),
                   ElevatedButton(
                     onPressed: () {
-                      jamsProv.joinUnjoinJam(loadedJam.id);
+                      setState(() {
+                        jamsProv.joinUnjoinJam(loadedJam.id);
+                      });
+
                       Navigator.pop(context);
                     },
                     child: Text(
