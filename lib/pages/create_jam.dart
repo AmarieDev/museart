@@ -10,7 +10,6 @@ import '../reusable_widgets/my_icon_text_field.dart';
 import '../reusable_widgets/my_padding.dart';
 import '../data_models/jam.dart';
 
-
 class CreateJamPage extends StatefulWidget {
   const CreateJamPage({Key? key}) : super(key: key);
   static const routeName = "/create-jam";
@@ -164,7 +163,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         lastDate: DateTime(2101));
                     if (pickedDate != null) {
                       String formattedDate =
-                          DateFormat('yyyy.MM.dd').format(pickedDate);
+                          DateFormat('dd.MM.yyyy').format(pickedDate);
 
                       setState(() {
                         dateInput.text =
