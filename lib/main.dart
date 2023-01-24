@@ -3,6 +3,7 @@ import 'package:flutter_application/pages/create_jam.dart';
 import 'package:flutter_application/pages/home_page.dart';
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/pages/jams_page.dart';
+import 'package:flutter_application/providers/user_provider.dart';
 import 'pages/sign_in.dart';
 import 'pages/sign_up.dart';
 import './providers/jams_provider.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
               previousJams == null ? [] : previousJams.jams,
             )),
           ),
+          ChangeNotifierProvider.value(value: UserProvider()),
         ],
         child: Consumer<AuthProvider>(
           builder: (ctx, auth, _) => MaterialApp(

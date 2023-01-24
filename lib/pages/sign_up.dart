@@ -1,13 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/user.dart';
-import 'package:flutter_application/pages/sign_in.dart';
 import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../http_exception.dart';
+import '../providers/user_provider.dart';
+import 'dart:convert';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -23,8 +22,11 @@ class _SignUpState extends State<SignUp> {
   final _form = GlobalKey<FormState>();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _confPassController = TextEditingController();
-  UserCredentials user = UserCredentials();
+  UserCredentials userCred = UserCredentials();
+  User user = User();
+
   String? _confPass;
   void _saveForm() {
     if (isFormValid()) {
@@ -98,7 +100,17 @@ class _SignUpState extends State<SignUp> {
                     inputType: TextInputType.emailAddress,
                     hintText: "Email",
                     save: (val) {
-                      user.email = val!;
+                      userCred.email = val!;
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: MyTextField(
+                    myControler: _userNameController,
+                    inputType: TextInputType.name,
+                    hintText: "User Name",
+                    save: (val) {
+                      user.userName = val!;
                     }),
               ),
               Padding(
@@ -108,7 +120,7 @@ class _SignUpState extends State<SignUp> {
                   hintText: "Password",
                   isObscure: _isObscure,
                   save: (val) {
-                    user.password = val!;
+                    userCred.password = val!;
                   },
                   mySuffixIcon: IconButton(
                     icon: Icon(
@@ -181,13 +193,23 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
                   onPressed: () async {
+                    final authProv =
+                         Provider.of<AuthProvider>(context, listen: false);
                     _saveForm();
                     try {
                       if (_confPassController.text == _passController.text) {
-                        await Provider.of<AuthProvider>(context, listen: false)
-                            .signup(user.email, user.password)
+                       await authProv
+                            .signup(userCred.email, userCred.password)
                             .then((_) {
                           Navigator.pop(context);
+                        }).whenComplete(() {
+                          String userId = authProv.getCurrentUserId()!;
+                          final userService =
+                              Provider.of<UserProvider>(context, listen: false);
+                          userService.authToken = authProv.token;
+                          userService.currentUserId = userId;
+
+                          userService.setUserName(user.userName);
                         });
                       }
                     } on HttpException catch (error) {
