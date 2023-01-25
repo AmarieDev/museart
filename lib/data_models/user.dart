@@ -1,29 +1,18 @@
 import 'jam.dart';
 
 class User {
-  final String id;
-  String firstName;
-  String lastName;
-  String birthday;
-  final UserCredentials _userCredentials = UserCredentials();
-  List<String> prefreableGenres;
-  List<String> instruments;
-  List<Jam> jams;
-  User({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.birthday,
-    this.prefreableGenres = const [],
-    this.instruments = const [],
-    this.jams = const [],
-  });
-  void setEmail(String newValue) {
-    _userCredentials.email = newValue;
-  }
+  final String? name;
+  final String? proficiency;
+  final String? profileImageUrl;
 
-  void setPassword(String newValue) {
-    _userCredentials.password = newValue;
+  User({this.name, this.proficiency, this.profileImageUrl});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json['name'],
+      proficiency: json['proficiency'],
+      profileImageUrl: json['profileImageUrl'],
+    );
   }
 }
 
