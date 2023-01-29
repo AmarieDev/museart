@@ -70,4 +70,16 @@ class UserProvider with ChangeNotifier {
     user = User.fromJson(extractedData);
     notifyListeners();
   }
+
+  Future<User?> getUser(String? userId, String? authToken) async {
+    final url = Uri.parse(
+        'https://museart-351c7-default-rtdb.firebaseio.com/users/$userId.json?auth=$authToken');
+    final response = await http.get(url);
+    if (response.body != "null") {
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      return User.fromJson(extractedData);
+    } else {
+      return null;
+    }
+  }
 }

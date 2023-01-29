@@ -1,8 +1,8 @@
 import 'jam.dart';
 
 class User {
-  final String? name;
-  final String? proficiency;
+  String? name;
+  String? proficiency;
   String? profileImageUrl;
 
   User({this.name, this.proficiency, this.profileImageUrl});

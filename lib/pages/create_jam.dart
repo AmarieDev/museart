@@ -55,7 +55,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     maxJamers: 2,
     prefreableGenres: [],
     prefreableInstruments: [],
-    joinedUsers: [''],
+    joinedUsers: [],
   );
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {
@@ -349,6 +349,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 newJam.prefreableInstruments = _selectedInstruments.isEmpty
                     ? ["any"]
                     : _selectedInstruments;
+
                 final address = await LocationHelper.getLocationAddreass(
                     _pickedLocation.lat, _pickedLocation.lng);
                 PlaceLocation locationData = PlaceLocation(

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
+import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
 import 'package:flutter_application/reusable_widgets/event_map.dart';
 import "package:provider/provider.dart";
@@ -55,8 +56,11 @@ class _JamsPageState extends State<JamsPage> {
             itemBuilder: (ctx, i) => GestureDetector(
               onTap: () async {
                 final isJoined = await jamsData.hasAlreadyJoined(jams[i].id);
-                Navigator.of(context).pushNamed(JamDetailPage.routeName,
-                    arguments: {'id': jams[i].id, 'isJoined': isJoined});
+                Navigator.of(context)
+                    .pushNamed(JamDetailPage.routeName, arguments: {
+                  'id': jams[i].id,
+                  'isJoined': isJoined,
+                });
               },
               child: ListTile(
                 leading: const Icon(Icons.music_note),
@@ -85,9 +89,11 @@ class _JamsPageState extends State<JamsPage> {
                   child: Chip(
                     padding: const EdgeInsets.all(0),
                     label: Text(
-                        (jams[i].joinedUsers.length - 1).toString() +
-                            '/' +
-                            jams[i].maxJamers.toString(),
+                        jams[i].joinedUsers?.length != null
+                            ? (jams[i].joinedUsers!.length - 1).toString() +
+                                '/' +
+                                jams[i].maxJamers.toString()
+                            : '0/' + jams[i].maxJamers.toString(),
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 10)),
                     backgroundColor: Colors.blue,

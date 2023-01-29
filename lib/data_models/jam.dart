@@ -11,7 +11,7 @@ class Jam {
   bool isPrivate;
   List<dynamic> prefreableGenres;
   List<dynamic> prefreableInstruments;
-  List<dynamic> joinedUsers = [''];
+  List<dynamic>? joinedUsers = [];
   Jam({
     required this.id,
     required this.title,

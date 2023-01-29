@@ -68,6 +68,12 @@ class JamsProvider with ChangeNotifier {
         "https://museart-351c7-default-rtdb.firebaseio.com/jams/$jamId.json?auth=$authToken");
     final getResponse = await http.get(url);
     final element = json.decode(getResponse.body);
+    if (element["joined users"] == null) {
+      List<dynamic> list = ['_currentUser'];
+      final update = {"joined users": list};
+      var response = await http.patch(url, body: json.encode(update));
+      return;
+    }
     List<dynamic> list = List<String>.from(element["joined users"]);
     if (!await hasAlreadyJoined(jamId)) {
       list.add(_currentUser);
@@ -108,30 +114,37 @@ class JamsProvider with ChangeNotifier {
         "https://museart-351c7-default-rtdb.firebaseio.com/jams.json?auth=$authToken");
     try {
       final response = await http.get(url);
-      final fetchedData = json.decode(response.body) as Map<String, dynamic>;
-      final List<Jam> loadedJams = [];
-      fetchedData.forEach((key, value) {
-        loadedJams.add(
-          Jam(
-            id: key,
-            title: value['title'],
-            date: value['date'],
-            time: value['time'],
-            location: PlaceLocation(
-                lat: value['lat'],
-                lng: value['lng'],
-                address: value['adderss']),
-            maxJamers: value['max jamers'],
-            description: value['description'],
-            isPrivate: value['private'],
-            prefreableGenres: value['prefreable genres'],
-            prefreableInstruments: value['prefreable instruments'],
-            joinedUsers: value['joined users'],
-          ),
-        );
-      });
-      _jams = loadedJams;
-      notifyListeners();
+      if (response.statusCode >= 400 || response.body == "null") {
+        return;
+        // Error updating user data
+      } else {
+        // Update successful
+
+        final fetchedData = json.decode(response.body) as Map<String, dynamic>;
+        final List<Jam> loadedJams = [];
+        fetchedData.forEach((key, value) {
+          loadedJams.add(
+            Jam(
+              id: key,
+              title: value['title'],
+              date: value['date'],
+              time: value['time'],
+              location: PlaceLocation(
+                  lat: value['lat'],
+                  lng: value['lng'],
+                  address: value['adderss']),
+              maxJamers: value['max jamers'],
+              description: value['description'],
+              isPrivate: value['private'],
+              prefreableGenres: value['prefreable genres'],
+              prefreableInstruments: value['prefreable instruments'],
+              joinedUsers: value['joined users'],
+            ),
+          );
+        });
+        _jams = loadedJams;
+        notifyListeners();
+      }
     } catch (error) {
       throw (error);
     }
