@@ -1,15 +1,12 @@
-import 'package:provider/provider.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../data_models/user.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
-import 'auth_provider.dart';
+import 'dart:io';
 
 class UserProvider with ChangeNotifier {
-  late User _user;
-
+  User _user = User();
   User get user => _user;
 
   set user(User value) {
@@ -17,9 +14,22 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setUserData(String userId) async {
+  Future<void> uploadProfileImage(
+      File image, String? userId, String? authToken) async {
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child(userId.toString() + '.jpg');
+
+    await ref.putFile(image).then((p0) => null);
+    final url = await ref.getDownloadURL();
+    user.profileImageUrl = url;
+    updateUserData(userId, authToken);
+  }
+
+  Future<void> setUserData(String? userId, String? authToken) async {
     final url = Uri.parse(
-        'https://your-firebase-app.firebaseio.com/users/$userId.json');
+        'https://museart-351c7-default-rtdb.firebaseio.com/users/$userId.json?auth=$authToken');
     final response = await http.put(url,
         body: jsonEncode({
           'name': user.name,
@@ -28,15 +38,16 @@ class UserProvider with ChangeNotifier {
         }));
     if (response.statusCode >= 400) {
       // Error updating user data
+      print("error 400");
     } else {
       // Update successful
-
+      print("success");
     }
   }
 
-  Future<void> updateUserData(String userId) async {
+  Future<void> updateUserData(String? userId, String? authToken) async {
     final url = Uri.parse(
-        'https://your-firebase-app.firebaseio.com/users/$userId.json');
+        'https://museart-351c7-default-rtdb.firebaseio.com/users/$userId.json?auth=$authToken');
     final response = await http.patch(url,
         body: jsonEncode({
           'name': user.name,
@@ -51,9 +62,9 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchUserData(String userId) async {
+  Future<void> fetchUserData(String? userId, String? authToken) async {
     final url = Uri.parse(
-        'https://your-firebase-app.firebaseio.com/users/$userId.json');
+        'https://museart-351c7-default-rtdb.firebaseio.com/users/$userId.json?auth=$authToken');
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     user = User.fromJson(extractedData);

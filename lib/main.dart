@@ -1,15 +1,22 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/create_jam.dart';
 import 'package:flutter_application/pages/home_page.dart';
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/pages/jams_page.dart';
+import 'package:flutter_application/providers/user_provider.dart';
 import 'pages/sign_in.dart';
 import 'pages/sign_up.dart';
 import './providers/jams_provider.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseStorage.instance.app;
+
   runApp(const MyApp());
 }
 
@@ -20,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider.value(value: UserProvider()),
           ChangeNotifierProvider.value(value: AuthProvider()),
           ChangeNotifierProxyProvider<AuthProvider, JamsProvider>(
             create: (_) => JamsProvider(null, null, []),

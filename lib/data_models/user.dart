@@ -3,9 +3,17 @@ import 'jam.dart';
 class User {
   final String? name;
   final String? proficiency;
-  final String? profileImageUrl;
+  String? profileImageUrl;
 
   User({this.name, this.proficiency, this.profileImageUrl});
+
+  User copyWith({String? name, String? proficiency, String? profileImageUrl}) {
+    return User(
+      name: name ?? this.name,
+      proficiency: proficiency ?? this.proficiency,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+    );
+  }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

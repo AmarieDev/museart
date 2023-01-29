@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/jams_page.dart';
 import 'package:flutter_application/pages/sign_up.dart';
+import 'package:flutter_application/providers/user_provider.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -122,8 +123,14 @@ class _SignInState extends State<SignIn> {
                 onPressed: () async {
                   _saveForm();
                   try {
-                    await Provider.of<AuthProvider>(context, listen: false)
-                        .signin(email, password);
+                    final authPovider =
+                        Provider.of<AuthProvider>(context, listen: false);
+                    await authPovider.signin(email, password).whenComplete(() {
+                      final userProvider =
+                          Provider.of<UserProvider>(context, listen: false);
+                      userProvider.fetchUserData(
+                          authPovider.getCurrentUserId(), authPovider.token);
+                    });
                   } on HttpException catch (error) {
                     var errorMessage = 'Authentication Failed!';
                     if (error.toString().contains('INVALID_EMAIL')) {
