@@ -88,7 +88,7 @@ class _EventMapPageState extends State<EventMapPage> {
                           'isJoined': isJoined
                         });
                   },
-                  child: Text("View Event"),
+                  child: Text("View Jam"),
                 ),
               )
             : Container(),
