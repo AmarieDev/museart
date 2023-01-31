@@ -67,8 +67,8 @@ class _JamsPageState extends State<JamsPage> {
               child: ListTile(
                 leading: Container(
                   padding: const EdgeInsets.all(10.0),
-                  width: 90,
-                  height: 90,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
@@ -83,16 +83,18 @@ class _JamsPageState extends State<JamsPage> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        jams[i].title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          jams[i].title,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Text(
                       jams[i].date,
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
