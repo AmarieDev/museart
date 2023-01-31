@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
+import 'package:flutter_application/providers/user_provider.dart';
 import 'package:flutter_application/reusable_widgets/event_map.dart';
 import "package:provider/provider.dart";
 import 'package:location/location.dart';
@@ -31,6 +32,7 @@ class _JamsPageState extends State<JamsPage> {
   @override
   Widget build(BuildContext context) {
     final jamsData = Provider.of<JamsProvider>(context);
+    final userProv = Provider.of<UserProvider>(context);
     Future<void> _refreshData() async {
       // Fetch new data and update the state
       setState(() {
@@ -63,20 +65,36 @@ class _JamsPageState extends State<JamsPage> {
                 });
               },
               child: ListTile(
-                leading: const Icon(Icons.music_note),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: DecorationImage(
+                      image: NetworkImage(userProv.user != null
+                          ? userProv.user!.profileImageUrl.toString()
+                          : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        jams[i].title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          jams[i].title,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Text(
                       jams[i].date,
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
@@ -132,7 +150,7 @@ class _JamsPageState extends State<JamsPage> {
                               return EventMapPage(snapshot.data);
                             }
                           } else {
-                            return Scaffold(
+                            return const Scaffold(
                               body: Center(child: CircularProgressIndicator()),
                             );
                           }
