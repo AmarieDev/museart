@@ -206,7 +206,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                             ),
                                           ),
                                           trailing: SizedBox(
-                                            width: 60,
+                                            width: 70,
                                             child: Text(joinedUsers.isNotEmpty
                                                 ? joinedUsers[i]
                                                     .proficiency
