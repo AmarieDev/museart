@@ -187,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                         await Provider.of<AuthProvider>(context, listen: false)
                             .signup(user.email, user.password)
                             .then((_) {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "userForm");
                         });
                       }
                     } on HttpException catch (error) {

@@ -4,6 +4,7 @@ import 'package:flutter_application/pages/create_jam.dart';
 import 'package:flutter_application/pages/home_page.dart';
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/pages/jams_page.dart';
+import 'package:flutter_application/pages/user_data_form.dart';
 import 'package:flutter_application/providers/user_provider.dart';
 import 'pages/sign_in.dart';
 import 'pages/sign_up.dart';
@@ -85,6 +86,7 @@ class MyApp extends StatelessWidget {
                             : const SignIn()),
                   ),
             routes: {
+              'userForm': (context) => UserDataForm(),
               'home': (context) => auth.isAuth ? HomePage() : SignIn(),
               JamDetailPage.routeName: (context) => JamDetailPage(),
               JamsPage.routeName: (context) => JamsPage(),

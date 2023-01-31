@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/user.dart';
+import 'package:flutter_application/pages/jams_page.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/user_provider.dart';
@@ -15,7 +16,6 @@ class _UserDataFormState extends State<UserDataForm> {
   final _formKey = GlobalKey<FormState>();
   String _name = '';
   String _proficiency = '';
-  String _profileImageUrl = '';
 
   @override
   Widget build(BuildContext context) {
@@ -49,19 +49,11 @@ class _UserDataFormState extends State<UserDataForm> {
               },
               onSaved: (value) => _proficiency = value!,
             ),
-            TextFormField(
-              initialValue: _profileImageUrl,
-              decoration: InputDecoration(labelText: 'Profile Image URL'),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a url';
-                }
-                return null;
-              },
-              onSaved: (value) => _profileImageUrl = value!,
-            ),
             ElevatedButton(
-              onPressed: _submitForm,
+              onPressed: () {
+                _submitForm();
+                Navigator.of(context).pushNamed('home');
+              },
               child: const Text('Save'),
             ),
           ],
@@ -81,9 +73,9 @@ class _UserDataFormState extends State<UserDataForm> {
       final userId = authProvider.getCurrentUserId();
       final authToken = authProvider.token;
       userProvider.user = User(
-          name: _name,
-          proficiency: _proficiency,
-          profileImageUrl: _profileImageUrl);
+        name: _name,
+        proficiency: _proficiency,
+      );
       userProvider.setUserData(userId, authToken);
     }
   }

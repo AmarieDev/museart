@@ -24,14 +24,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     void _getImage() async {
       XFile? image = await ImagePicker().pickImage(
           source: ImageSource.gallery, imageQuality: 50, maxWidth: 200);
-      setState(() {
-        _image = File(image!.path);
-      });
-      userProvider.uploadProfileImage(
-        _image!,
-        authProv.getCurrentUserId(),
-        authProv.token,
-      );
+      if (image != null) {
+        setState(() {
+          _image = File(image.path);
+        });
+        userProvider.uploadProfileImage(
+          _image!,
+          authProv.getCurrentUserId(),
+          authProv.token,
+        );
+      }
     }
 
     userProvider.fetchUserData(authProv.getCurrentUserId(), authProv.token);
@@ -39,43 +41,43 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: GestureDetector(
-          onTap: () {
-            _getImage();
-            FocusScope.of(context).unfocus();
-          },
+          onTap: () {},
           child: ListView(
             children: [
               Center(
-                child: Stack(
-                  alignment: Alignment.center,
+                child: Column(
                   children: [
                     Container(
                       padding: const EdgeInsets.all(10.0),
-                      width: MediaQuery.of(context).size.width / 4,
-                      height: MediaQuery.of(context).size.width / 4,
+                      width: 90,
+                      height: 90,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
                         image: DecorationImage(
-                          image: NetworkImage(
-                              userProvider.user.profileImageUrl.toString()),
+                          image: NetworkImage(userProvider.user != null
+                              ? userProvider.user!.profileImageUrl.toString()
+                              : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 15,
-                      right: 15,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(40, 4, 0, 0),
                       child: CircleAvatar(
                         backgroundColor: Colors.black54,
                         child: IconButton(
                           splashColor: const Color(0xffFF8383),
                           hoverColor: const Color(0xff81BDFF),
-                          splashRadius: 500,
+                          splashRadius: 25,
                           icon: const Icon(
                             Icons.edit,
                             color: Colors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _getImage();
+                            FocusScope.of(context).unfocus();
+                          },
                         ),
                       ),
                     ),
@@ -88,7 +90,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               MyPadding(
                   child: MyTextField(
                 inputType: TextInputType.none,
-                hintText: userProvider.user.name ?? '',
+                hintText: userProvider.user?.name ?? '',
                 readOnly: true,
                 save: (val) {},
               )),
@@ -108,7 +110,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed("/");
-
+                    userProvider.user = null;
                     authProv.logout();
                   },
                   child: const Text("logout"),
