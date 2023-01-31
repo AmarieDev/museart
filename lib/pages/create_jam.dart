@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/PlaceLocation.dart';
 import 'package:flutter_application/location_helper.dart';
+import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/reusable_widgets/location_input.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
 import "package:provider/provider.dart";
@@ -50,6 +51,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     title: "",
     date: "",
     time: "",
+    host: "",
     location: PlaceLocation(lat: 0, lng: 0),
     description: "",
     maxJamers: 2,
@@ -342,6 +344,9 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 _saveForm();
                 final jamsData =
                     Provider.of<JamsProvider>(context, listen: false);
+                final authProvider =
+                    Provider.of<AuthProvider>(context, listen: false);
+                newJam.host = authProvider.getCurrentUserId()!;
                 newJam.isPrivate = isSwitched;
 
                 newJam.prefreableGenres =

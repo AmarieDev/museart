@@ -31,6 +31,7 @@ class JamsProvider with ChangeNotifier {
         'title': value.title,
         'date': value.date,
         'time': value.time,
+        'host': value.host,
         'address': value.location.address,
         'lat': value.location.lat,
         'lng': value.location.lng,
@@ -48,6 +49,7 @@ class JamsProvider with ChangeNotifier {
         title: value.title,
         date: value.date,
         time: value.time,
+        host: value.host,
         location: value.location,
         maxJamers: value.maxJamers,
         description: value.description,
@@ -129,6 +131,7 @@ class JamsProvider with ChangeNotifier {
               title: value['title'],
               date: value['date'],
               time: value['time'],
+              host: value['host'],
               location: PlaceLocation(
                   lat: value['lat'],
                   lng: value['lng'],

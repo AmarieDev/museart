@@ -23,6 +23,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
     final jamsProv = Provider.of<JamsProvider>(context, listen: true);
     final userProv = Provider.of<UserProvider>(context, listen: false);
     final authProv = Provider.of<AuthProvider>(context, listen: false);
+    userProv.fetchUserData(authProv.getCurrentUserId(), authProv.token);
 
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -34,6 +35,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
       title: "title",
       date: "date",
       time: "time",
+      host: "",
       location: PlaceLocation(lat: 0, lng: 0),
       maxJamers: 2,
     );
@@ -75,13 +77,17 @@ class _JamDetailPageState extends State<JamDetailPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 3, 0, 3.0),
                           child: Container(
+                            padding: const EdgeInsets.all(10.0),
                             width: 90,
                             height: 90,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
                               image: DecorationImage(
-                                image: AssetImage('assets/images/david.jpg'),
+                                image: NetworkImage(userProv.user != null
+                                    ? userProv.user!.profileImageUrl.toString()
+                                    : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
@@ -90,7 +96,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Ammar abi",
+                              userProv.user?.name ?? '',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),

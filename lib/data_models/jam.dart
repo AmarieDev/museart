@@ -5,6 +5,7 @@ class Jam {
   String title;
   String date;
   String time;
+  String host;
   PlaceLocation location;
   String description;
   int maxJamers;
@@ -18,6 +19,7 @@ class Jam {
     required this.date,
     required this.time,
     required this.location,
+    required this.host,
     required this.maxJamers,
     this.isPrivate = false,
     this.description = "",
