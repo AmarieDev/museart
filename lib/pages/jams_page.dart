@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/providers/auth_provider.dart';
@@ -164,11 +163,14 @@ class _JamsPageState extends State<JamsPage> {
                   size: 48.0,
                   color: Colors.black,
                 ),
-                onPressed: () {
-                  getCurrentLocation();
+                onPressed: () async {
+                  LocationData? _pos;
+                  await getCurrentLocation().then((value) => _pos = value);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EventMapPage()),
+                    MaterialPageRoute(
+                      builder: (context) => EventMapPage(_pos),
+                    ),
                   );
                 },
               ),
