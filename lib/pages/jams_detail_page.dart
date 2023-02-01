@@ -23,7 +23,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
     final jamsProv = Provider.of<JamsProvider>(context, listen: true);
     final userProv = Provider.of<UserProvider>(context, listen: false);
     final authProv = Provider.of<AuthProvider>(context, listen: false);
-    userProv.fetchUserData(authProv.getCurrentUserId(), authProv.token);
+    // userProv.fetchUserData(authProv.getCurrentUserId(), authProv.token);
 
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -40,6 +40,10 @@ class _JamDetailPageState extends State<JamDetailPage> {
       maxJamers: 2,
     );
     loadedJam = jamsProv.findById(jamId.toString());
+    User? host;
+    userProv
+        .getUser(loadedJam.host, authProv.token)
+        .then((value) => host = value);
     final String _genres = loadedJam.prefreableGenres.join(', ');
     final String _instuments = loadedJam.prefreableInstruments.join(', ');
     List<User> joinedUsers = [];
@@ -63,7 +67,9 @@ class _JamDetailPageState extends State<JamDetailPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: _future,
+            future: userProv
+                .getUser(loadedJam.host, authProv.token)
+                .then((value) => host = value),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
@@ -84,8 +90,9 @@ class _JamDetailPageState extends State<JamDetailPage> {
                               shape: BoxShape.circle,
                               color: Colors.white,
                               image: DecorationImage(
-                                image: NetworkImage(userProv.user != null
-                                    ? userProv.user!.profileImageUrl.toString()
+                                image: NetworkImage(host != null ||
+                                        host?.profileImageUrl != null
+                                    ? host!.profileImageUrl.toString()
                                     : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
                                 fit: BoxFit.fill,
                               ),
@@ -96,7 +103,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userProv.user?.name ?? '',
+                              host != null ? host!.name.toString() : "",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
