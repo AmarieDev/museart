@@ -133,18 +133,15 @@ class _JamsPageState extends State<JamsPage> {
                                   child: Chip(
                                     padding: const EdgeInsets.all(0),
                                     label: Text(
-                                        jams[i].joinedUsers?.length != null
-                                            ? (jams[i].joinedUsers!.length - 1)
-                                                    .toString() +
-                                                '/' +
-                                                jams[i].maxJamers.toString()
-                                            : '0/' +
-                                                jams[i].maxJamers.toString(),
+                                        (jams[i].joinedUsers.length - 1)
+                                                .toString() +
+                                            '/' +
+                                            jams[i].maxJamers.toString(),
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 10)),
                                     backgroundColor: jams[i].maxJamers ==
-                                            (jams[i].joinedUsers!.length - 1)
+                                            (jams[i].joinedUsers.length - 1)
                                         ? Color(0xffFF8383)
                                         : Colors.blue,
                                     shape: RoundedRectangleBorder(

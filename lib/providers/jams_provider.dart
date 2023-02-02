@@ -71,7 +71,7 @@ class JamsProvider with ChangeNotifier {
     final getResponse = await http.get(url);
     final element = json.decode(getResponse.body);
     if (element["joined users"] == null) {
-      List<dynamic> list = ['_currentUser'];
+      List<dynamic> list = [];
       final update = {"joined users": list};
       var response = await http.patch(url, body: json.encode(update));
       return;

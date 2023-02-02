@@ -46,23 +46,22 @@ class _JamDetailPageState extends State<JamDetailPage> {
         .then((value) => host = value);
     final String _genres = loadedJam.prefreableGenres.join(', ');
     final String _instuments = loadedJam.prefreableInstruments.join(', ');
-    List<User> joinedUsers = [];
-    Future<dynamic>? _future;
+    List<User?> joinedUsers = [];
     Future<void> fetchJoindUsers() async {
-      if (loadedJam.joinedUsers != null) {
-        for (var element in loadedJam.joinedUsers!) {
-          if (element != "" || element != null || element != Null) {
-            await userProv.getUser(element, authProv.token).then((value) {
-              if (value != null) {
-                joinedUsers.add(value);
-              }
-            });
-          }
+      for (var i = 0; i < loadedJam.joinedUsers.length; loadedJam.joinedUsers) {
+        if (loadedJam.joinedUsers[i] != "" ||
+            loadedJam.joinedUsers[i] != null) {
+          await userProv
+              .getUser(loadedJam.joinedUsers[i], authProv.token)
+              .then((value) {
+            if (value?.name != null) {
+              joinedUsers.add(value);
+            }
+          });
         }
+        i++;
       }
     }
-
-    _future = fetchJoindUsers();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -160,18 +159,15 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                 child: Chip(
                                   padding: const EdgeInsets.all(0),
                                   label: Text(
-                                      loadedJam.joinedUsers?.length != null
-                                          ? (loadedJam.joinedUsers!.length - 1)
-                                                  .toString() +
-                                              '/' +
-                                              loadedJam.maxJamers.toString()
-                                          : '0/' +
-                                              loadedJam.maxJamers.toString(),
+                                      (loadedJam.joinedUsers.length - 1)
+                                              .toString() +
+                                          '/' +
+                                          loadedJam.maxJamers.toString(),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12)),
                                   backgroundColor: loadedJam.maxJamers ==
-                                          (loadedJam.joinedUsers!.length - 1)
+                                          (loadedJam.joinedUsers.length - 1)
                                       ? Color(0xffFF8383)
                                       : Colors.blue,
                                   shape: RoundedRectangleBorder(
@@ -194,35 +190,33 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                 padding: EdgeInsets.zero,
                                 itemCount: joinedUsers.length,
                                 itemBuilder: (ctx, i) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 90),
-                                    child: SizedBox(
-                                      height: 25,
-                                      child: ListTile(
-                                          leading: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 3),
-                                            child: Text(
-                                              joinedUsers.isNotEmpty
-                                                  ? joinedUsers[i]
-                                                      .name
-                                                      .toString()
-                                                  : "",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                  if (joinedUsers[i]!.name != null) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 90),
+                                      child: SizedBox(
+                                        height: 25,
+                                        child: ListTile(
+                                            leading: Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 3),
+                                              child: Text(
+                                                joinedUsers[i]!.name.toString(),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          trailing: SizedBox(
-                                            width: 70,
-                                            child: Text(joinedUsers.isNotEmpty
-                                                ? joinedUsers[i]
-                                                    .proficiency
-                                                    .toString()
-                                                : ""),
-                                          )),
-                                    ),
-                                  );
+                                            trailing: SizedBox(
+                                              width: 70,
+                                              child: Text(joinedUsers[i]!
+                                                  .proficiency
+                                                  .toString()),
+                                            )),
+                                      ),
+                                    );
+                                  } else {
+                                    return const SizedBox();
+                                  }
                                 }),
                           ),
                         ),

@@ -57,7 +57,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     maxJamers: 2,
     prefreableGenres: [],
     prefreableInstruments: [],
-    joinedUsers: [],
+    joinedUsers: [''],
   );
   final _form = GlobalKey<FormState>();
   void _showMultiSelect() async {
@@ -364,6 +364,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                 newJam.location = locationData;
 
                 jamsData.addJam(newJam);
+                jamsData.joinUnjoinJam(newJam.id);
                 Navigator.of(context).pushNamed('home');
               }
             }),
