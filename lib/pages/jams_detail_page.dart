@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 import '../data_models/user.dart';
 import '../reusable_widgets/map.dart';
 import 'package:flutter_application/reusable_widgets/location_output.dart';
@@ -36,7 +36,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
       date: "date",
       time: "time",
       host: "",
-      location: PlaceLocation(lat: 0, lng: 0),
+      location: JamLocation(lat: 0, lng: 0),
       maxJamers: 2,
     );
     loadedJam = jamsProv.findById(jamId.toString());
@@ -143,7 +143,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                               fullscreenDialog: true,
                               builder: (ctx) => MapPage(
                                 isSelecting: false,
-                                initialLocation: PlaceLocation(
+                                initialLocation: JamLocation(
                                   lat: loadedJam.location.lat,
                                   lng: loadedJam.location.lng,
                                 ),

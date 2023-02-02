@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 import 'dart:convert';
 import '../data_models/jam.dart';
 import 'package:http/http.dart' as http;
@@ -132,7 +132,7 @@ class JamsProvider with ChangeNotifier {
               date: value['date'],
               time: value['time'],
               host: value['host'],
-              location: PlaceLocation(
+              location: JamLocation(
                   lat: value['lat'],
                   lng: value['lng'],
                   address: value['adderss']),

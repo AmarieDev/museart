@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 import 'package:flutter_application/location_helper.dart';
 import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/reusable_widgets/location_input.dart';
@@ -20,7 +20,7 @@ class CreateJamPage extends StatefulWidget {
 }
 
 class _CreateJamPageState extends State<CreateJamPage> {
-  late PlaceLocation _pickedLocation;
+  late JamLocation _pickedLocation;
   List<String> _selectedInstruments = [];
   List<String> _selectedGenres = [];
   final List<String> _instuments = [
@@ -38,7 +38,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     'Rap',
   ];
   void _selectPlace(double lat, double lng) {
-    _pickedLocation = PlaceLocation(lat: lat, lng: lng);
+    _pickedLocation = JamLocation(lat: lat, lng: lng);
   }
 
   late int _buttonState;
@@ -52,7 +52,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     date: "",
     time: "",
     host: "",
-    location: PlaceLocation(lat: 0, lng: 0),
+    location: JamLocation(lat: 0, lng: 0),
     description: "",
     maxJamers: 2,
     prefreableGenres: [],
@@ -357,7 +357,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
 
                 final address = await LocationHelper.getLocationAddreass(
                     _pickedLocation.lat, _pickedLocation.lng);
-                PlaceLocation locationData = PlaceLocation(
+                JamLocation locationData = JamLocation(
                     lat: _pickedLocation.lat,
                     lng: _pickedLocation.lng,
                     address: address);

@@ -1,4 +1,4 @@
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 
 class Jam {
   String id;
@@ -6,7 +6,7 @@ class Jam {
   String date;
   String time;
   String host;
-  PlaceLocation location;
+  JamLocation location;
   String description;
   int maxJamers;
   bool isPrivate;

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-class PlaceLocation {
+class JamLocation {
   final double lat;
   final double lng;
   final String? address;
 
-  const PlaceLocation({
+  const JamLocation({
     required this.lat,
     required this.lng,
     this.address,

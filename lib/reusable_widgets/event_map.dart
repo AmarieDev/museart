@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import "package:provider/provider.dart";
@@ -22,11 +22,11 @@ class _EventMapPageState extends State<EventMapPage> {
     super.initState();
   }
 
-  Future<PlaceLocation> getInitPos() async {
+  Future<JamLocation> getInitPos() async {
     initLat = widget._currentPos!.latitude!;
     initLong = widget._currentPos!.longitude!;
 
-    return PlaceLocation(lat: initLat!, lng: initLong!);
+    return JamLocation(lat: initLat!, lng: initLong!);
   }
 
   Location location = Location();
