@@ -172,7 +172,10 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12)),
-                                  backgroundColor: Colors.blue,
+                                  backgroundColor: loadedJam.maxJamers ==
+                                          (loadedJam.joinedUsers!.length - 1)
+                                      ? Color(0xffFF8383)
+                                      : Colors.blue,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
