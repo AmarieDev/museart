@@ -143,7 +143,10 @@ class _JamsPageState extends State<JamsPage> {
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 10)),
-                                    backgroundColor: Colors.blue,
+                                    backgroundColor: jams[i].maxJamers ==
+                                            (jams[i].joinedUsers!.length - 1)
+                                        ? Color(0xffFF8383)
+                                        : Colors.blue,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
