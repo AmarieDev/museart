@@ -67,9 +67,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: userProv
-                .getUser(loadedJam.host, authProv.token)
-                .then((value) => host = value),
+            future: fetchJoindUsers(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
