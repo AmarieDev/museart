@@ -1,5 +1,3 @@
-import 'jam.dart';
-
 class User {
   String? name;
   String? proficiency;
@@ -22,9 +20,4 @@ class User {
       profileImageUrl: json['profileImageUrl'],
     );
   }
-}
-
-class UserCredentials {
-  late String email;
-  late String password;
 }
