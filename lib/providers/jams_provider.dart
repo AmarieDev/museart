@@ -4,23 +4,30 @@ import 'dart:convert';
 import '../data_models/jam.dart';
 import 'package:http/http.dart' as http;
 
+// Provider-Klasse, die die Daten von Jams an die Widgets liefert.
+// Enthält auch Methoden zur Interaktion mit den Daten, z.B. Jams hinzufügen, abrufen und aktualisieren
 class JamsProvider with ChangeNotifier {
-  // ignore: prefer_final_fields
+  // Jams Liste
   List<Jam> _jams = [];
-  //returns a copy of jams so that no modification can happen when this object gets accessed
+
+  // Kopie von Jams, die nicht von anderen Klassen geändert werden können
   List<Jam> get jams {
     return [..._jams];
   }
 
+  // Variablen zum Speichern des Authentifizierungstokens und des aktuellen Benutzers
   final String? authToken;
   final String? _currentUser;
 
+  // Constructor to initialize values
   JamsProvider(this.authToken, this._currentUser, this._jams);
 
+  // Findet einen Jam anhand seiner ID
   Jam findById(String id) {
     return _jams.firstWhere((element) => element.id == id);
   }
 
+  // Fügt einen neuen Jam zur Datenbank hinzu
   void addJam(Jam value) {
     final url = Uri.parse(
         "https://museart-351c7-default-rtdb.firebaseio.com/jams.json?auth=$authToken");
@@ -58,13 +65,15 @@ class JamsProvider with ChangeNotifier {
         prefreableInstruments: value.prefreableInstruments,
         joinedUsers: value.joinedUsers,
       );
+      // Dem neuen Jam beitreten
       joinUnjoinJam(newJam.id);
       _jams.add(newJam);
-      //notify every listener that a change has happen
+      // Informiere Abhängige Widgets über Änderungen
       notifyListeners();
     });
   }
 
+  // Je nach aktuellem Status dem Jam beitreten oder aus dem Jam austreten
   Future<void> joinUnjoinJam(String jamId) async {
     final url = Uri.parse(
         "https://museart-351c7-default-rtdb.firebaseio.com/jams/$jamId.json?auth=$authToken");
@@ -73,7 +82,7 @@ class JamsProvider with ChangeNotifier {
     if (element["joined users"] == null) {
       List<dynamic> list = [];
       final update = {"joined users": list};
-      var response = await http.patch(url, body: json.encode(update));
+      await http.patch(url, body: json.encode(update));
       return;
     }
     List<dynamic> list = List<String>.from(element["joined users"]);
@@ -82,7 +91,7 @@ class JamsProvider with ChangeNotifier {
       final update = {"joined users": list};
       var response = await http.patch(url, body: json.encode(update));
       if (response.statusCode != 200) {
-        print('Error: ${response.statusCode}');
+        //  print('Error: ${response.statusCode}');
         return;
       }
     } else {
@@ -90,12 +99,13 @@ class JamsProvider with ChangeNotifier {
       final update = {"joined users": list};
       var response = await http.patch(url, body: json.encode(update));
       if (response.statusCode != 200) {
-        print('Error: ${response.statusCode}');
+        //  print('Error: ${response.statusCode}');
         return;
       }
     }
   }
 
+//überprüfe, ob der Benutzer schon beigetreten ist
   Future<bool> hasAlreadyJoined(String jamId) async {
     final url = Uri.parse(
         "https://museart-351c7-default-rtdb.firebaseio.com/jams/$jamId.json?auth=$authToken");
@@ -111,6 +121,7 @@ class JamsProvider with ChangeNotifier {
     return false;
   }
 
+// hollt die Jams vom Datenbank ab
   Future<void> fetchJams() async {
     final url = Uri.parse(
         "https://museart-351c7-default-rtdb.firebaseio.com/jams.json?auth=$authToken");
@@ -149,7 +160,7 @@ class JamsProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (error) {
-      throw (error);
+      rethrow;
     }
   }
 }
