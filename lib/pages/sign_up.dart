@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/user.dart';
-import 'package:flutter_application/pages/sign_in.dart';
 import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +20,9 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _confPassController = TextEditingController();
-  UserCredentials user = UserCredentials();
+  String? _email;
+  String? _password;
+
   String? _confPass;
   void _saveForm() {
     if (isFormValid()) {
@@ -98,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                     inputType: TextInputType.emailAddress,
                     hintText: "Email",
                     save: (val) {
-                      user.email = val!;
+                      _email = val!;
                     }),
               ),
               Padding(
@@ -108,7 +106,7 @@ class _SignUpState extends State<SignUp> {
                   hintText: "Password",
                   isObscure: _isObscure,
                   save: (val) {
-                    user.password = val!;
+                    _password = val!;
                   },
                   mySuffixIcon: IconButton(
                     icon: Icon(
@@ -185,7 +183,7 @@ class _SignUpState extends State<SignUp> {
                     try {
                       if (_confPassController.text == _passController.text) {
                         await Provider.of<AuthProvider>(context, listen: false)
-                            .signup(user.email, user.password)
+                            .signup(_email!, _password!)
                             .then((_) {
                           Navigator.pushNamed(context, "userForm");
                         });

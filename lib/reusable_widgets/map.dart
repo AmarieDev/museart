@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
-  final PlaceLocation initialLocation;
+  final JamLocation initialLocation;
   final bool isSelecting;
   const MapPage({
-    this.initialLocation = const PlaceLocation(lat: 37.465465, lng: -122.135),
+    this.initialLocation = const JamLocation(lat: 37.465465, lng: -122.135),
     this.isSelecting = false,
   });
 

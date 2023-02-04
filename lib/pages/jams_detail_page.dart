@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/data_models/PlaceLocation.dart';
+import 'package:flutter_application/data_models/jam_location.dart';
 import '../data_models/user.dart';
 import '../reusable_widgets/map.dart';
 import 'package:flutter_application/reusable_widgets/location_output.dart';
@@ -23,7 +23,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
     final jamsProv = Provider.of<JamsProvider>(context, listen: true);
     final userProv = Provider.of<UserProvider>(context, listen: false);
     final authProv = Provider.of<AuthProvider>(context, listen: false);
-    userProv.fetchUserData(authProv.getCurrentUserId(), authProv.token);
+    // userProv.fetchUserData(authProv.getCurrentUserId(), authProv.token);
 
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -36,34 +36,37 @@ class _JamDetailPageState extends State<JamDetailPage> {
       date: "date",
       time: "time",
       host: "",
-      location: PlaceLocation(lat: 0, lng: 0),
+      location: JamLocation(lat: 0, lng: 0),
       maxJamers: 2,
     );
     loadedJam = jamsProv.findById(jamId.toString());
+    User? host;
+    userProv
+        .getUser(loadedJam.host, authProv.token)
+        .then((value) => host = value);
     final String _genres = loadedJam.prefreableGenres.join(', ');
     final String _instuments = loadedJam.prefreableInstruments.join(', ');
-    List<User> joinedUsers = [];
-    Future<dynamic>? _future;
+    List<User?> joinedUsers = [];
     Future<void> fetchJoindUsers() async {
-      if (loadedJam.joinedUsers != null) {
-        for (var element in loadedJam.joinedUsers!) {
-          if (element != "" || element != null || element != Null) {
-            await userProv.getUser(element, authProv.token).then((value) {
-              if (value != null) {
-                joinedUsers.add(value);
-              }
-            });
-          }
+      for (var i = 0; i < loadedJam.joinedUsers.length; loadedJam.joinedUsers) {
+        if (loadedJam.joinedUsers[i] != "" ||
+            loadedJam.joinedUsers[i] != null) {
+          await userProv
+              .getUser(loadedJam.joinedUsers[i], authProv.token)
+              .then((value) {
+            if (value?.name != null) {
+              joinedUsers.add(value);
+            }
+          });
         }
+        i++;
       }
     }
-
-    _future = fetchJoindUsers();
 
     return Scaffold(
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: _future,
+            future: fetchJoindUsers(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
@@ -84,8 +87,9 @@ class _JamDetailPageState extends State<JamDetailPage> {
                               shape: BoxShape.circle,
                               color: Colors.white,
                               image: DecorationImage(
-                                image: NetworkImage(userProv.user != null
-                                    ? userProv.user!.profileImageUrl.toString()
+                                image: NetworkImage(host != null ||
+                                        host?.profileImageUrl != null
+                                    ? host!.profileImageUrl.toString()
                                     : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
                                 fit: BoxFit.fill,
                               ),
@@ -96,7 +100,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userProv.user?.name ?? '',
+                              host != null ? host!.name.toString() : "",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -136,7 +140,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                               fullscreenDialog: true,
                               builder: (ctx) => MapPage(
                                 isSelecting: false,
-                                initialLocation: PlaceLocation(
+                                initialLocation: JamLocation(
                                   lat: loadedJam.location.lat,
                                   lng: loadedJam.location.lng,
                                 ),
@@ -155,17 +159,17 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                 child: Chip(
                                   padding: const EdgeInsets.all(0),
                                   label: Text(
-                                      loadedJam.joinedUsers?.length != null
-                                          ? (loadedJam.joinedUsers!.length - 1)
-                                                  .toString() +
-                                              '/' +
-                                              loadedJam.maxJamers.toString()
-                                          : '0/' +
-                                              loadedJam.maxJamers.toString(),
+                                      (loadedJam.joinedUsers.length - 1)
+                                              .toString() +
+                                          '/' +
+                                          loadedJam.maxJamers.toString(),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12)),
-                                  backgroundColor: Colors.blue,
+                                  backgroundColor: loadedJam.maxJamers ==
+                                          (loadedJam.joinedUsers.length - 1)
+                                      ? Color(0xffFF8383)
+                                      : Colors.blue,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
@@ -186,35 +190,33 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                 padding: EdgeInsets.zero,
                                 itemCount: joinedUsers.length,
                                 itemBuilder: (ctx, i) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 90),
-                                    child: SizedBox(
-                                      height: 25,
-                                      child: ListTile(
-                                          leading: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 3),
-                                            child: Text(
-                                              joinedUsers.isNotEmpty
-                                                  ? joinedUsers[i]
-                                                      .name
-                                                      .toString()
-                                                  : "",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                  if (joinedUsers[i]!.name != null) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 90),
+                                      child: SizedBox(
+                                        height: 25,
+                                        child: ListTile(
+                                            leading: Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 3),
+                                              child: Text(
+                                                joinedUsers[i]!.name.toString(),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          trailing: SizedBox(
-                                            width: 60,
-                                            child: Text(joinedUsers.isNotEmpty
-                                                ? joinedUsers[i]
-                                                    .proficiency
-                                                    .toString()
-                                                : ""),
-                                          )),
-                                    ),
-                                  );
+                                            trailing: SizedBox(
+                                              width: 70,
+                                              child: Text(joinedUsers[i]!
+                                                  .proficiency
+                                                  .toString()),
+                                            )),
+                                      ),
+                                    );
+                                  } else {
+                                    return const SizedBox();
+                                  }
                                 }),
                           ),
                         ),

@@ -21,7 +21,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final authProv = Provider.of<AuthProvider>(context, listen: false);
     File? _image;
 
-    void _getImage() async {
+    Future<void> _getImage() async {
       XFile? image = await ImagePicker().pickImage(
           source: ImageSource.gallery, imageQuality: 50, maxWidth: 200);
       if (image != null) {
@@ -37,92 +37,104 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
 
     userProvider.fetchUserData(authProv.getCurrentUserId(), authProv.token);
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
-        child: GestureDetector(
-          onTap: () {},
-          child: ListView(
-            children: [
-              Center(
-                child: Column(
+    return FutureBuilder(
+      future: userProvider.fetchUserData(
+          authProv.getCurrentUserId(), authProv.token),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
+            body: Container(
+              padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
+              child: GestureDetector(
+                onTap: () {},
+                child: ListView(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(10.0),
-                      width: 90,
-                      height: 90,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        image: DecorationImage(
-                          image: NetworkImage(userProvider.user != null
-                              ? userProvider.user!.profileImageUrl.toString()
-                              : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
-                          fit: BoxFit.fill,
-                        ),
+                    Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            width: 90,
+                            height: 90,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              image: DecorationImage(
+                                image: NetworkImage(userProvider.user != null
+                                    ? userProvider.user!.profileImageUrl
+                                        .toString()
+                                    : "https://cdn.pixabay.com/photo/2017/11/15/09/28/music-player-2951399_960_720.jpg"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 4, 0, 0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.black54,
+                              child: IconButton(
+                                splashColor: const Color(0xffFF8383),
+                                hoverColor: const Color(0xff81BDFF),
+                                splashRadius: 25,
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  _getImage();
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 4, 0, 0),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.black54,
-                        child: IconButton(
-                          splashColor: const Color(0xffFF8383),
-                          hoverColor: const Color(0xff81BDFF),
-                          splashRadius: 25,
-                          icon: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            _getImage();
-                            FocusScope.of(context).unfocus();
-                          },
-                        ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+                    MyPadding(
+                        child: MyTextField(
+                      inputType: TextInputType.none,
+                      hintText: userProvider.user?.name ?? '',
+                      readOnly: true,
+                      save: (val) {},
+                    )),
+                    MyPadding(
+                        child: MyTextField(
+                            inputType: TextInputType.none,
+                            hintText: "ammar.mresh@gmail.com",
+                            readOnly: true,
+                            save: (val) {})),
+                    MyPadding(
+                        child: MyTextField(
+                            inputType: TextInputType.none,
+                            hintText: "04.05.1998",
+                            readOnly: true,
+                            save: (val) {})),
+                    MyPadding(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed("/");
+                          userProvider.user = null;
+                          authProv.logout();
+                        },
+                        child: const Text("logout"),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 35,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 35,
-              ),
-              MyPadding(
-                  child: MyTextField(
-                inputType: TextInputType.none,
-                hintText: userProvider.user?.name ?? '',
-                readOnly: true,
-                save: (val) {},
-              )),
-              MyPadding(
-                  child: MyTextField(
-                      inputType: TextInputType.none,
-                      hintText: "ammar.mresh@gmail.com",
-                      readOnly: true,
-                      save: (val) {})),
-              MyPadding(
-                  child: MyTextField(
-                      inputType: TextInputType.none,
-                      hintText: "04.05.1998",
-                      readOnly: true,
-                      save: (val) {})),
-              MyPadding(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed("/");
-                    userProvider.user = null;
-                    authProv.logout();
-                  },
-                  child: const Text("logout"),
-                ),
-              ),
-              const SizedBox(
-                height: 35,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else {
+          // If the future is still running, return the loading indicator
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
