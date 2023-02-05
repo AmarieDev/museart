@@ -3,6 +3,7 @@ import 'package:flutter_application/pages/create_jam.dart';
 import 'package:flutter_application/pages/jams_page.dart';
 import 'user_profile.dart';
 
+// ignore: use_key_in_widget_constructors
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -11,10 +12,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  List<Widget> _tabs = [
-    JamsPage(),
-    CreateJamPage(),
-    EditProfilePage(),
+  final List<Widget> _tabs = [
+    const JamsPage(),
+    const CreateJamPage(),
+    const EditProfilePage(),
   ];
 
   @override

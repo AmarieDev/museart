@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/user.dart';
-import 'package:flutter_application/pages/jams_page.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/user_provider.dart';
 
 class UserDataForm extends StatefulWidget {
-  UserDataForm({Key? key}) : super(key: key);
+  const UserDataForm({Key? key}) : super(key: key);
 
   @override
   State<UserDataForm> createState() => _UserDataFormState();
@@ -21,7 +20,7 @@ class _UserDataFormState extends State<UserDataForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: const Text('User Profile'),
       ),
       body: Form(
         key: _formKey,
@@ -29,7 +28,7 @@ class _UserDataFormState extends State<UserDataForm> {
           children: <Widget>[
             TextFormField(
               initialValue: _name,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(labelText: 'Name'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a name';
@@ -40,7 +39,7 @@ class _UserDataFormState extends State<UserDataForm> {
             ),
             TextFormField(
               initialValue: _proficiency,
-              decoration: InputDecoration(labelText: 'Proficiency'),
+              decoration: const InputDecoration(labelText: 'Proficiency'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a proficiency';

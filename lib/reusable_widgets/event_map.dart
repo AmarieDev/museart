@@ -8,6 +8,7 @@ import '../pages/jams_detail_page.dart';
 
 class EventMapPage extends StatefulWidget {
   final LocationData? _currentPos;
+  // ignore: use_key_in_widget_constructors
   const EventMapPage(this._currentPos);
   @override
   _EventMapPageState createState() => _EventMapPageState();

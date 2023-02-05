@@ -94,7 +94,7 @@ class _LocationInputState extends State<LocationInput> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(

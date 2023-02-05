@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/jams_page.dart';
 import 'package:flutter_application/pages/sign_up.dart';
 import 'package:flutter_application/providers/user_provider.dart';
 import 'package:flutter_application/reusable_widgets/logo.dart';

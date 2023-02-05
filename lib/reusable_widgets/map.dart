@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class MapPage extends StatefulWidget {
   final JamLocation initialLocation;
   final bool isSelecting;
+  // ignore: use_key_in_widget_constructors
   const MapPage({
     this.initialLocation = const JamLocation(lat: 37.465465, lng: -122.135),
     this.isSelecting = false,

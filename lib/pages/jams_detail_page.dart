@@ -9,6 +9,7 @@ import '../providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class JamDetailPage extends StatefulWidget {
   static const routeName = "/jam-detail";
   late bool isJoined;
@@ -36,7 +37,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
       date: "date",
       time: "time",
       host: "",
-      location: JamLocation(lat: 0, lng: 0),
+      location: const JamLocation(lat: 0, lng: 0),
       maxJamers: 2,
     );
     loadedJam = jamsProv.findById(jamId.toString());
@@ -168,7 +169,7 @@ class _JamDetailPageState extends State<JamDetailPage> {
                                           fontSize: 12)),
                                   backgroundColor: loadedJam.maxJamers ==
                                           (loadedJam.joinedUsers.length - 1)
-                                      ? Color(0xffFF8383)
+                                      ? const Color(0xffFF8383)
                                       : Colors.blue,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),

@@ -52,7 +52,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
     date: "",
     time: "",
     host: "",
-    location: JamLocation(lat: 0, lng: 0),
+    location: const JamLocation(lat: 0, lng: 0),
     description: "",
     maxJamers: 2,
     prefreableGenres: [],
@@ -171,9 +171,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                         dateInput.text =
                             formattedDate; //set output date to TextField value.
                       });
-                    } else {
-                      print("Date is not selected");
-                    }
+                    } else {}
                   },
                   onSaved: (val) => (newJam.date = val!),
                 ),
@@ -205,9 +203,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                             .format(context)
                             .toString(); //set output time to TextField value.
                       });
-                    } else {
-                      print("Date is not selected");
-                    }
+                    } else {}
                   },
                   onSaved: (val) => (newJam.time = val!),
                 ),

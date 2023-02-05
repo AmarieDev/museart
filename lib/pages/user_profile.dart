@@ -132,7 +132,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         } else {
           // If the future is still running, return the loading indicator
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
