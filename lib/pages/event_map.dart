@@ -4,7 +4,7 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import "package:provider/provider.dart";
 import 'package:flutter_application/providers/jams_provider.dart';
-import '../pages/jams_detail_page.dart';
+import 'jams_detail_page.dart';
 
 class EventMapPage extends StatefulWidget {
   final LocationData? _currentPos;
@@ -36,6 +36,13 @@ class _EventMapPageState extends State<EventMapPage> {
   GoogleMapController? _controller;
   bool _showButton = false;
   String? selectedJamId;
+
+  void _addMapStyle() async {
+    String mapStyle =
+        await DefaultAssetBundle.of(context).loadString('assets/mapStyle.json');
+    _controller?.setMapStyle(mapStyle);
+  }
+
   void _getEvents() async {
     final jamsData = Provider.of<JamsProvider>(context, listen: false);
     final jams = jamsData.jams;
@@ -68,6 +75,7 @@ class _EventMapPageState extends State<EventMapPage> {
 
   void _onMapCreated(GoogleMapController controller) {
     _controller = controller;
+    _addMapStyle();
   }
 
   @override

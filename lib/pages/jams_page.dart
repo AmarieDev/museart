@@ -3,7 +3,7 @@ import 'package:flutter_application/pages/jams_detail_page.dart';
 import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
 import 'package:flutter_application/providers/user_provider.dart';
-import 'package:flutter_application/reusable_widgets/event_map.dart';
+import 'package:flutter_application/pages/event_map.dart';
 import "package:provider/provider.dart";
 import 'package:location/location.dart';
 
