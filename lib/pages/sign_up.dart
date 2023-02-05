@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/reusable_widgets/logo.dart';
 import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   String? _email;
   String? _password;
 
+  // ignore: unused_field
   String? _confPass;
   void _saveForm() {
     if (isFormValid()) {
@@ -79,145 +81,163 @@ class _SignUpState extends State<SignUp> {
         child: Form(
           key: _form,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: (MediaQuery.of(context).size.width),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                child: Text("Sign up",
-                    style: Theme.of(context).textTheme.headline1),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: MyTextField(
-                    myControler: _emailController,
-                    inputType: TextInputType.emailAddress,
-                    hintText: "Email",
-                    save: (val) {
-                      _email = val!;
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: MyTextField(
-                  myControler: _passController,
-                  hintText: "Password",
-                  isObscure: _isObscure,
-                  save: (val) {
-                    _password = val!;
-                  },
-                  mySuffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      _isObscure ? Icons.visibility_off : Icons.visibility,
-                      size: 20.0,
-                      color: Theme.of(context).primaryColorDark,
+              Expanded(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: (MediaQuery.of(context).size.width),
                     ),
-                    onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              MyPadding(
-                child: SizedBox(
-                  width: 235,
-                  child: TextFormField(
-                    controller: _confPassController,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.visiblePassword,
-                    onSaved: (val) {
-                      _confPass = val;
-                    },
-                    obscureText: _isConfPassObscure,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "This input field can't be empty!";
-                      } else if (value != _passController.text) {
-                        return "Password must be same as above!";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // Based on passwordVisible state choose the icon
-                          _isConfPassObscure
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          size: 20.0,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                        onPressed: () {
-                          // Update the state i.e. toogle the state of passwordVisible variable
-                          setState(() {
-                            _isConfPassObscure = !_isConfPassObscure;
-                          });
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      child: Text("Sign up",
+                          style: Theme.of(context).textTheme.headline1),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: MyTextField(
+                          myControler: _emailController,
+                          inputType: TextInputType.emailAddress,
+                          hintText: "Email",
+                          save: (val) {
+                            _email = val!;
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: MyTextField(
+                        myControler: _passController,
+                        hintText: "Password",
+                        isObscure: _isObscure,
+                        save: (val) {
+                          _password = val!;
                         },
+                        mySuffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            _isObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            size: 20.0,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
+                        ),
                       ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: "Confirm Password",
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 30),
-                      hintStyle: const TextStyle(
-                          fontSize: 15, color: Color(0xffB89C9C)),
                     ),
-                  ),
+                    MyPadding(
+                      child: SizedBox(
+                        width: 235,
+                        child: TextFormField(
+                          controller: _confPassController,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.visiblePassword,
+                          onSaved: (val) {
+                            _confPass = val;
+                          },
+                          obscureText: _isConfPassObscure,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "This input field can't be empty!";
+                            } else if (value != _passController.text) {
+                              return "Password must be same as above!";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _isConfPassObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                size: 20.0,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  _isConfPassObscure = !_isConfPassObscure;
+                                });
+                              },
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: "Confirm Password",
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 30),
+                            hintStyle: const TextStyle(
+                                fontSize: 15, color: Color(0xffB89C9C)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          _saveForm();
+                          try {
+                            if (_confPassController.text ==
+                                _passController.text) {
+                              await Provider.of<AuthProvider>(context,
+                                      listen: false)
+                                  .signup(_email!, _password!)
+                                  .then((_) {
+                                Navigator.pushNamed(context, "userForm");
+                              });
+                            }
+                          } on HttpException catch (error) {
+                            var errorMessage = 'Authentication Failed.';
+                            if (error.toString().contains('EMAIL_EXISTS')) {
+                              errorMessage =
+                                  'This emaill address is already in use';
+                            } else if (error
+                                .toString()
+                                .contains('INVALID_EMAIL')) {
+                              errorMessage =
+                                  'This is not a valid email address';
+                            } else if (error
+                                .toString()
+                                .contains('WEAK_PASSWORD')) {
+                              errorMessage = 'This password is too weak.';
+                            }
+                            _showErrorDialog(errorMessage);
+                          } catch (error) {
+                            var errorMessage = 'Authentication Failed!';
+                            _showErrorDialog(errorMessage);
+                          }
+                        },
+                        child: const Text("Sign up"),
+                        style: ElevatedButton.styleFrom(
+                          primary: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "home");
+                        },
+                        child: const Text("  Back "),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    _saveForm();
-                    try {
-                      if (_confPassController.text == _passController.text) {
-                        await Provider.of<AuthProvider>(context, listen: false)
-                            .signup(_email!, _password!)
-                            .then((_) {
-                          Navigator.pushNamed(context, "userForm");
-                        });
-                      }
-                    } on HttpException catch (error) {
-                      var errorMessage = 'Authentication Failed.';
-                      if (error.toString().contains('EMAIL_EXISTS')) {
-                        errorMessage = 'This emaill address is already in use';
-                      } else if (error.toString().contains('INVALID_EMAIL')) {
-                        errorMessage = 'This is not a valid email address';
-                      } else if (error.toString().contains('WEAK_PASSWORD')) {
-                        errorMessage = 'This password is too weak.';
-                      }
-                      _showErrorDialog(errorMessage);
-                    } catch (error) {
-                      var errorMessage = 'Authentication Failed!';
-                      _showErrorDialog(errorMessage);
-                    }
-                  },
-                  child: const Text("Sign up"),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "home");
-                  },
-                  child: const Text("  Back "),
-                ),
-              ),
+              const Logo(),
             ],
           ),
         ),
