@@ -19,8 +19,10 @@ class _EventMapPageState extends State<EventMapPage> {
   double? initLong;
   @override
   void initState() {
-    _getEvents();
     super.initState();
+
+    _getEvents();
+    _addMarkerIcon();
   }
 
   Future<JamLocation> getInitPos() async {
@@ -36,11 +38,17 @@ class _EventMapPageState extends State<EventMapPage> {
   GoogleMapController? _controller;
   bool _showButton = false;
   String? selectedJamId;
+  BitmapDescriptor? _markerIcon;
 
   void _addMapStyle() async {
     String mapStyle =
         await DefaultAssetBundle.of(context).loadString('assets/mapStyle.json');
     _controller?.setMapStyle(mapStyle);
+  }
+
+  void _addMarkerIcon() async {
+    _markerIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), "assets/images/Pin.png");
   }
 
   void _getEvents() async {
@@ -64,9 +72,13 @@ class _EventMapPageState extends State<EventMapPage> {
               () {
                 _showButton = true;
                 selectedJamId = jamId;
+                _addMarkerIcon();
               },
             );
           },
+          icon: _markerIcon == null
+              ? BitmapDescriptor.defaultMarker
+              : _markerIcon!,
         );
         _markers.add(marker);
       }
@@ -75,7 +87,9 @@ class _EventMapPageState extends State<EventMapPage> {
 
   void _onMapCreated(GoogleMapController controller) {
     _controller = controller;
+
     _addMapStyle();
+    _getEvents();
   }
 
   @override
