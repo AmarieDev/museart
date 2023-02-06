@@ -22,9 +22,6 @@ class _JamsPageState extends State<JamsPage> {
 
   @override
   void initState() {
-    // Provider.of<JamsProvider>(context, listen: false).fetchJams();
-    //  _future = location.getLocation();
-    // work around if listen is set to true
     Future.delayed(Duration.zero).then((value) =>
         Provider.of<JamsProvider>(context, listen: false).fetchJams());
     super.initState();
