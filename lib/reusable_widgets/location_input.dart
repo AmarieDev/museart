@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:flutter_application/location_helper.dart';
+import 'package:flutter_application/other/location_helper.dart';
 import 'map.dart';
 
 class LocationInput extends StatefulWidget {

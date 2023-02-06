@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/data_models/jam_location.dart';
-import 'package:flutter_application/location_helper.dart';
+import 'package:flutter_application/other/location_helper.dart';
 import 'package:flutter_application/providers/auth_provider.dart';
 import 'package:flutter_application/reusable_widgets/location_input.dart';
 import 'package:flutter_application/providers/jams_provider.dart';
@@ -24,18 +24,58 @@ class _CreateJamPageState extends State<CreateJamPage> {
   List<String> _selectedInstruments = [];
   List<String> _selectedGenres = [];
   final List<String> _instuments = [
-    'Guitar',
+    'Piano'
+        'Guitar',
     'Drums',
-    'Bass',
-    'Piano',
+    'Violin',
+    'Trumpet',
     'Saxophone',
+    'Flute',
+    'Clarinet',
+    'Bass guitar',
+    'Harp',
+    'Maracas',
+    'Trombone',
+    'Ukulele',
+    'Banjo',
+    'Mandolin',
+    'Accordion',
+    'Synthesizer',
+    'Percussion',
   ];
   final List<String> _genres = [
+    'Pop',
     'Rock',
-    'Metal',
-    'Funk',
+    'Hip Hop',
+    'Electronic',
+    'Blues',
     'Jazz',
-    'Rap',
+    'Soul',
+    'R&B',
+    'Folk',
+    'Country',
+    'Classical',
+    'Metal',
+    'Reggae',
+    'Funk',
+    'Latin',
+    'World',
+    'Punk',
+    'Gospel',
+    'Blues Rock',
+    'Ambient',
+    'Progressive Rock',
+    'Hard Rock',
+    'Soul Jazz',
+    'Funk Rock',
+    'Country Pop',
+    'Indie Rock',
+    'House',
+    'Techno',
+    'Trance',
+    'Drum & Bass',
+    'Dubstep',
+    'Grime',
   ];
   void _selectPlace(double lat, double lng) {
     _pickedLocation = JamLocation(lat: lat, lng: lng);
@@ -160,8 +200,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                     DateTime? pickedDate = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(
-                            2000), //DateTime.now() - not to allow to choose before today.
+                        firstDate: DateTime(2022),
                         lastDate: DateTime(2101));
                     if (pickedDate != null) {
                       String formattedDate =
@@ -273,6 +312,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   ],
                 ),
               ),
+              /*
               MyPadding(
                 child: Row(children: [
                   const Text("Private"),
@@ -289,7 +329,7 @@ class _CreateJamPageState extends State<CreateJamPage> {
                   ),
                 ]),
               ),
-
+*/
               MyPadding(
                 child: ElevatedButton(
                   onPressed: () {

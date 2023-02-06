@@ -17,7 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseStorage.instance.app;
-
   runApp(const MyApp());
 }
 
@@ -43,13 +42,9 @@ class MyApp extends StatelessWidget {
           builder: (ctx, auth, _) => MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              // Define the default brightness and colors.
-              //brightness: Brightness.dark,
               primaryColor: const Color(0xff3E99FF),
-
               colorScheme: ColorScheme.fromSwatch()
                   .copyWith(secondary: const Color(0xffFF8383)),
-
               // Define the default font family.
               fontFamily: 'IBMPlexSans',
 

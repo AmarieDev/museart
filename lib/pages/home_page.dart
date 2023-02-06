@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _tabs = [
     const JamsPage(),
     const CreateJamPage(),
-    const EditProfilePage(),
+    const UserProfile(),
   ];
 
   @override

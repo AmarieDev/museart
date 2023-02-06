@@ -4,7 +4,7 @@ import 'package:flutter_application/reusable_widgets/my_padding.dart';
 import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../http_exception.dart';
+import '../other/http_exception.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);

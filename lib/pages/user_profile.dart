@@ -7,14 +7,14 @@ import '../providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+class UserProfile extends StatefulWidget {
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  _UserProfileState createState() => _UserProfileState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -100,18 +100,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       readOnly: true,
                       save: (val) {},
                     )),
-                    MyPadding(
-                        child: MyTextField(
-                            inputType: TextInputType.none,
-                            hintText: "ammar.mresh@gmail.com",
-                            readOnly: true,
-                            save: (val) {})),
-                    MyPadding(
-                        child: MyTextField(
-                            inputType: TextInputType.none,
-                            hintText: "04.05.1998",
-                            readOnly: true,
-                            save: (val) {})),
                     MyPadding(
                       child: ElevatedButton(
                         onPressed: () {

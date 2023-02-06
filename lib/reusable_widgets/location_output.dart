@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/location_helper.dart';
+import 'package:flutter_application/other/location_helper.dart';
 
 class LocationOutput extends StatefulWidget {
   double? lat;
