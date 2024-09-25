@@ -6,6 +6,7 @@ import '../reusable_widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../other/http_exception.dart';
+import 'jams_page.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _SignInState extends State<SignIn> {
                   onPressed: (() => Navigator.of(ctx).pop()),
                   child: const Text('Okay'),
                   style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   ),
                 )
               ],
@@ -72,7 +73,7 @@ class _SignInState extends State<SignIn> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Text("Sign in",
-                          style: Theme.of(context).textTheme.headline1),
+                          style: Theme.of(context).textTheme.displayLarge),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -127,6 +128,10 @@ class _SignInState extends State<SignIn> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
+                        Navigator.of(context).pushNamed(
+                          'home',
+                        );
+                        /*
                         _saveForm();
                         try {
                           final authPovider =
@@ -160,6 +165,7 @@ class _SignInState extends State<SignIn> {
                           var errorMessage = 'Authentication Failed!';
                           _showErrorDialog(errorMessage);
                         }
+                        */
                       },
                       child: const Text("Sign in"),
                     ),

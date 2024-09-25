@@ -15,8 +15,8 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseStorage.instance.app;
+  // await Firebase.initializeApp();
+  //FirebaseStorage.instance.app;
   runApp(const MyApp());
 }
 
@@ -51,23 +51,25 @@ class MyApp extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   //primary: Colors.lightBlue[800],
-                  primary: const Color(0xff3E99FF),
+                  backgroundColor: const Color(0xff3E99FF),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
               textTheme: const TextTheme(
-                headline1: TextStyle(
+                displayLarge: TextStyle(
                   color: Colors.black,
                   fontSize: 24.0,
                   fontWeight: FontWeight.w900,
                 ),
-                headline6:
+                displaySmall:
                     TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
-                bodyText2: TextStyle(fontSize: 14.0),
+                displayMedium: TextStyle(fontSize: 14.0),
               ),
             ),
+            home: HomePage(),
+            /*
             home: auth.isAuth
                 ? HomePage()
                 : FutureBuilder(
@@ -80,6 +82,7 @@ class MyApp extends StatelessWidget {
                               )
                             : const SignIn()),
                   ),
+                  */
             routes: {
               'userForm': (context) => const UserDataForm(),
               'home': (context) => auth.isAuth ? HomePage() : const SignIn(),
